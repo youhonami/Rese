@@ -1,0 +1,96 @@
+/* 店舗詳細ページレイアウト */
+.shop-detail {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 40px auto;
+    gap: 20px;
+}
+
+/* 戻るボタン */
+.back-btn {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* 店舗情報 */
+.shop-info {
+    width: 60%;
+}
+
+.shop-info img {
+    width: 100%;
+    border-radius: 10px;
+    margin: 10px 0;
+}
+
+.tags {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.overview {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* 予約ボックス */
+.reservation-box {
+    width: 35%;
+    padding: 20px;
+    background: #3366ff;
+    color: white;
+    border-radius: 10px;
+}
+
+.reservation-box h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.reservation-box label {
+    display: block;
+    margin-top: 10px;
+}
+
+.reservation-box input,
+.reservation-box select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+}
+
+/* 予約概要 */
+.reservation-summary {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.reservation-summary p {
+    font-size: 16px;
+}
+
+/* 予約ボタン */
+.reserve-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background: white;
+    color: #3366ff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.reserve-btn:hover {
+    background: #e0e0e0;
+}

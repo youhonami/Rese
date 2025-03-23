@@ -1,0 +1,35 @@
+.thanks-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    background-color: #f2f2f2;
+}
+
+.thanks-card {
+    background-color: #fff;
+    padding: 40px 60px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.message {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.login-btn {
+    display: inline-block;
+    background-color: #3366ff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.login-btn:hover {
+    background-color: #1f4ed8;
+}

@@ -1,0 +1,116 @@
+/* 基本リセット */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ヘッダー */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #f2f2f2;
+}
+
+/* ロゴ＆アイコンのラッパー */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ロゴ文字 */
+.logo a {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3366ff;
+    text-decoration: none;
+}
+
+/* メニューアイコン */
+.menu-icon {
+    font-size: 24px;
+    color: #3366ff;
+    background: white;
+    border: 2px solid #3366ff;
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* フィルター（検索フォーム） */
+.filter {
+    display: flex;
+    gap: 10px;
+}
+
+.filter select,
+.filter input,
+.filter button {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* モーダルメニューのトグル */
+.menu-toggle {
+    display: none;
+}
+
+/* モーダルメニュー全体 */
+.menu-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* メニュー表示トグルがONのとき表示 */
+.menu-toggle:checked ~ .menu-modal {
+    display: flex;
+}
+
+/* モーダル内のリスト */
+.menu-modal ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+}
+
+.menu-modal li {
+    margin: 20px 0;
+}
+
+.menu-modal a,
+.menu-modal .link-btn {
+    text-decoration: none;
+    font-size: 24px;
+    color: #3366ff;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* 閉じるボタン */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: white;
+    background: #3366ff;
+    border-radius: 6px;
+    padding: 5px 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
