@@ -14,7 +14,7 @@ class ShopController extends Controller
         $areas = Shop::select('area')->distinct()->pluck('area');
         $genres = Shop::select('genre')->distinct()->pluck('genre');
 
-        // 検索機能（省略可）
+        // 検索機能
         $shops = Shop::query();
         if ($request->filled('area')) {
             $shops->where('area', $request->area);

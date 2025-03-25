@@ -5,27 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ReservationRequest;
 
 class ReservationController extends Controller
 {
-    public function store(Request $request)
+    public function store(ReservationRequest $request)
     {
-        $request->validate([
-            'shop_id' => 'required|exists:shops,id',
-            'date' => 'required|date',
-            'time' => 'required',
-            'number' => 'required|integer|min:1',
-        ]);
 
+
+        // バリデーション済みデータを取得
+        $validated = $request->validated();
+
+        // 登録処理（例）
         Reservation::create([
-            'user_id' => Auth::id(),
-            'shop_id' => $request->shop_id,
-            'date' => $request->date,
-            'time' => $request->time,
-            'number' => $request->number,
+            'user_id' => auth()->id(),
+            'shop_id' => $validated['shop_id'],
+            'date'    => $validated['date'],
+            'time'    => $validated['time'],
+            'number'  => $validated['number'],
         ]);
 
-        return view('done');
+        return redirect()->route('done');
     }
 
     public function destroy($id)

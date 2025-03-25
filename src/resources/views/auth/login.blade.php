@@ -10,18 +10,27 @@
 <div class="login-container">
     <div class="login-box">
         <div class="login-header">Login</div>
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login') }}" novalidate>
             @csrf
-            <div class="form-group">
-                <span class="icon">📧</span>
-                <input type="email" name="email" placeholder="Email" required>
+            <div class="form-group-wrapper">
+                <div class="form-group">
+                    <span class="icon">📧</span>
+                    <input type="email" name="email" placeholder="Email" value="{{ old('email') }}">
+                </div>
+                @error('email')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
             </div>
 
-            <div class="form-group">
-                <span class="icon">🔒</span>
-                <input type="password" name="password" placeholder="Password" required>
+            <div class="form-group-wrapper">
+                <div class="form-group">
+                    <span class="icon">🔒</span>
+                    <input type="password" name="password" placeholder="Password">
+                </div>
+                @error('password')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
             </div>
-
             <div class="form-actions">
                 <button type="submit">ログイン</button>
             </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,7 @@ Route::get('/thanks', function () {
 
 //予約
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+Route::view('/done', 'done')->name('done');
 
 // 予約キャンセル
 Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
@@ -50,3 +52,5 @@ Route::middleware('auth')->group(function () {
 
 //検索
 Route::get('/api/shops/search', [ShopController::class, 'search'])->name('shops.search');
+
+Route::post('/login', [LoginController::class, 'login'])->name('login');
