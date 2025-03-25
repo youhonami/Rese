@@ -2,27 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Reservation;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ReservationRequest;
+use App\Models\Reservation;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
     public function store(ReservationRequest $request)
     {
-
-
-        // バリデーション済みデータを取得
         $validated = $request->validated();
 
-        // 登録処理（例）
         Reservation::create([
             'user_id' => auth()->id(),
             'shop_id' => $validated['shop_id'],
-            'date'    => $validated['date'],
-            'time'    => $validated['time'],
-            'number'  => $validated['number'],
+            'date' => $validated['date'],
+            'time' => $validated['time'],
+            'number' => $validated['number'],
         ]);
 
         return redirect()->route('done');
@@ -32,7 +28,6 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::findOrFail($id);
 
-        // ログインユーザーの予約か確認
         if ($reservation->user_id !== auth()->id()) {
             abort(403);
         }
@@ -40,5 +35,27 @@ class ReservationController extends Controller
         $reservation->delete();
 
         return redirect()->route('mypage')->with('success', '予約をキャンセルしました');
+    }
+
+    public function edit(Reservation $reservation)
+    {
+        $this->authorize('update', $reservation);
+
+        return view('reservations.edit', compact('reservation'));
+    }
+
+    public function update(Request $request, Reservation $reservation)
+    {
+        $this->authorize('update', $reservation);
+
+        $request->validate([
+            'date' => 'required|date|after_or_equal:today',
+            'time' => 'required|in:17:00,18:00,19:00,20:00,21:00',
+            'number' => 'required|integer|min:1|max:5',
+        ]);
+
+        $reservation->update($request->only('date', 'time', 'number'));
+
+        return redirect()->route('mypage')->with('status', '予約を更新しました');
     }
 }

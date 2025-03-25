@@ -15,11 +15,18 @@
             <div class="card-header">
                 <span class="icon">⏰</span>
                 <span class="title">予約{{ $index + 1 }}</span>
-                <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('この予約をキャンセルしますか？');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="cancel-btn">キャンセル</button>
-                </form>
+                <div class="card-actions">
+                    {{-- 編集アイコン --}}
+                    <a href="{{ route('reservations.edit', $reservation->id) }}" class="edit-btn">予約変更</a>
+
+
+                    {{-- キャンセルボタン --}}
+                    <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('この予約をキャンセルしますか？');" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="cancel-btn">キャンセル</button>
+                    </form>
+                </div>
             </div>
             <ul>
                 <li>Shop: {{ $reservation->shop->shop_name }}</li>

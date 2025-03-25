@@ -99,3 +99,20 @@
 .cancel-btn:hover {
     background-color: #e60000;
 }
+
+.edit-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #28a745; /* 緑 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.edit-btn:hover {
+    background-color: #218838; /* ホバー時に濃い緑 */
+}

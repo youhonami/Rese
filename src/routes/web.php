@@ -53,4 +53,9 @@ Route::middleware('auth')->group(function () {
 //検索
 Route::get('/api/shops/search', [ShopController::class, 'search'])->name('shops.search');
 
+//ログイン（バリデーション）
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+//予約変更
+Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
+Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
