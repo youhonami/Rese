@@ -6,6 +6,7 @@ use App\Http\Requests\ReservationRequest;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ReservationController extends Controller
 {
@@ -24,6 +25,7 @@ class ReservationController extends Controller
         return redirect()->route('done');
     }
 
+    //キャンセル
     public function destroy($id)
     {
         $reservation = Reservation::findOrFail($id);
@@ -44,6 +46,7 @@ class ReservationController extends Controller
         return view('reservations.edit', compact('reservation'));
     }
 
+    //予約変更
     public function update(Request $request, Reservation $reservation)
     {
         $this->authorize('update', $reservation);
@@ -57,5 +60,26 @@ class ReservationController extends Controller
         $reservation->update($request->only('date', 'time', 'number'));
 
         return redirect()->route('mypage')->with('status', '予約を更新しました');
+    }
+
+    //QRコード
+    public function showQrCode($id)
+    {
+        $reservation = Reservation::with('shop')->findOrFail($id);
+
+        if ($reservation->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $text = "店舗: {$reservation->shop->shop_name}\n日時: {$reservation->date} {$reservation->time}\n人数: {$reservation->number}人";
+
+        $qrCode = QrCode::format('svg')
+            ->size(250)
+            ->encoding('UTF-8')
+            ->generate($text);
+
+        return view('reservations.qrcode', [
+            'qrCode' => $qrCode,
+        ]);
     }
 }

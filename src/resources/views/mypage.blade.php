@@ -16,9 +16,12 @@
                 <span class="icon">⏰</span>
                 <span class="title">予約{{ $index + 1 }}</span>
                 <div class="card-actions">
+
+                    {{-- QRコード表示ページへのリンク --}}
+                    <a href="{{ route('reservations.qrcode', $reservation->id) }}" class="qr-btn">QRコード</a>
+
                     {{-- 編集アイコン --}}
                     <a href="{{ route('reservations.edit', $reservation->id) }}" class="edit-btn">予約変更</a>
-
 
                     {{-- キャンセルボタン --}}
                     <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('この予約をキャンセルしますか？');" style="display:inline;">

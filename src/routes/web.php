@@ -59,3 +59,7 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 //予約変更
 Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
 Route::put('/reservations/{reservation}', [ReservationController::class, 'update'])->name('reservations.update');
+
+Route::get('/reservations/{id}/qrcode', [ReservationController::class, 'showQrCode'])
+    ->name('reservations.qrcode')
+    ->middleware(['auth']);
