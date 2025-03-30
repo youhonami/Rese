@@ -8,6 +8,9 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Auth\LoginController;
 
+use App\Http\Controllers\ReviewController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,3 +66,6 @@ Route::put('/reservations/{reservation}', [ReservationController::class, 'update
 Route::get('/reservations/{id}/qrcode', [ReservationController::class, 'showQrCode'])
     ->name('reservations.qrcode')
     ->middleware(['auth']);
+
+Route::get('/reviews/{reservation}', [ReviewController::class, 'create'])->name('reviews.create');
+Route::post('/reviews/{reservation}', [ReviewController::class, 'store'])->name('reviews.store');

@@ -4,6 +4,43 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/mypage.css') }}">
+<style>
+    .custom-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center;
+        width: 300px;
+    }
+
+    .modal-content h3 {
+        margin-top: 0;
+        color: #3366ff;
+    }
+
+    .modal-content button {
+        margin-top: 20px;
+        padding: 8px 16px;
+        background-color: #3366ff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -20,8 +57,23 @@
                     {{-- QRコード表示ページへのリンク --}}
                     <a href="{{ route('reservations.qrcode', $reservation->id) }}" class="qr-btn">QRコード</a>
 
-                    {{-- 編集アイコン --}}
+                    {{-- 編集ボタン --}}
                     <a href="{{ route('reservations.edit', $reservation->id) }}" class="edit-btn">予約変更</a>
+
+                    {{-- 評価ボタン --}}
+                    @php
+                    $reservationDateTime = \Carbon\Carbon::parse($reservation->date . ' ' . $reservation->time);
+                    @endphp
+
+                    @if (!$reservation->review)
+                    <a href="{{ route('reviews.create', $reservation->id) }}"
+                        class="review-btn"
+                        data-review-time="{{ $reservationDateTime->format('Y-m-d H:i') }}">
+                        評価する
+                    </a>
+                    @else
+                    <span class="review-completed">評価済み</span>
+                    @endif
 
                     {{-- キャンセルボタン --}}
                     <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('この予約をキャンセルしますか？');" style="display:inline;">
@@ -29,6 +81,7 @@
                         @method('DELETE')
                         <button type="submit" class="cancel-btn">キャンセル</button>
                     </form>
+
                 </div>
             </div>
             <ul>
@@ -63,11 +116,36 @@
         </div>
     </div>
 </div>
+
+{{-- カスタムモーダル --}}
+<div id="reviewModal" class="custom-modal">
+    <div class="modal-content">
+        <h3>評価機能のご案内</h3>
+        <p id="reviewModalMessage"></p>
+        <button onclick="closeReviewModal()">OK</button>
+    </div>
+</div>
 @endsection
 
 @section('scripts')
 <script>
+    // 評価ボタンの制御（カスタムモーダル表示）
     document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.review-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const dateTimeStr = this.dataset.reviewTime;
+                const reservationDate = new Date(dateTimeStr.replace(/-/g, '/'));
+                const now = new Date();
+
+                if (now < reservationDate) {
+                    e.preventDefault();
+                    document.getElementById('reviewModalMessage').textContent = `評価は ${dateTimeStr} 以降に可能です`;
+                    document.getElementById('reviewModal').style.display = 'flex';
+                }
+            });
+        });
+
+        // お気に入りハート
         document.querySelectorAll('.heart-btn').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -97,5 +175,9 @@
             });
         });
     });
+
+    function closeReviewModal() {
+        document.getElementById('reviewModal').style.display = 'none';
+    }
 </script>
 @endsection

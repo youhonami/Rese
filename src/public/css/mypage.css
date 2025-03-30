@@ -134,3 +134,54 @@
 .qr-btn:hover {
     background-color: #5a007a;
 }
+
+.review-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.review-btn:hover {
+    background-color: #e68900;
+}
+
+.reviewed-label {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.review-disabled-btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #ccc;
+    color: #666;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 10px;
+    cursor: not-allowed;
+}
+
+.review-completed {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #ffc107;
+    color: white;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 10px;
+}
