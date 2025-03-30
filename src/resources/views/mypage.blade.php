@@ -4,43 +4,6 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/mypage.css') }}">
-<style>
-    .custom-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 9999;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        display: none;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .modal-content {
-        background: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        text-align: center;
-        width: 300px;
-    }
-
-    .modal-content h3 {
-        margin-top: 0;
-        color: #3366ff;
-    }
-
-    .modal-content button {
-        margin-top: 20px;
-        padding: 8px 16px;
-        background-color: #3366ff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-</style>
 @endsection
 
 @section('content')
@@ -48,22 +11,22 @@
     <div class="reservation-section">
         <h2>予約状況</h2>
         @foreach ($reservations as $index => $reservation)
+        @php
+        $reservationDateTime = \Carbon\Carbon::parse($reservation->date . ' ' . $reservation->time);
+        $isPast = now()->greaterThanOrEqualTo($reservationDateTime);
+        @endphp
         <div class="reservation-card">
             <div class="card-header">
                 <span class="icon">⏰</span>
                 <span class="title">予約{{ $index + 1 }}</span>
                 <div class="card-actions">
-
-                    {{-- QRコード表示ページへのリンク --}}
                     <a href="{{ route('reservations.qrcode', $reservation->id) }}" class="qr-btn">QRコード</a>
 
-                    {{-- 編集ボタン --}}
+                    @if ($isPast)
+                    <span class="edit-disabled">変更不可</span>
+                    @else
                     <a href="{{ route('reservations.edit', $reservation->id) }}" class="edit-btn">予約変更</a>
-
-                    {{-- 評価ボタン --}}
-                    @php
-                    $reservationDateTime = \Carbon\Carbon::parse($reservation->date . ' ' . $reservation->time);
-                    @endphp
+                    @endif
 
                     @if (!$reservation->review)
                     <a href="{{ route('reviews.create', $reservation->id) }}"
@@ -75,13 +38,15 @@
                     <span class="review-completed">評価済み</span>
                     @endif
 
-                    {{-- キャンセルボタン --}}
+                    @if ($isPast)
+                    <span class="cancel-disabled">来店済み</span>
+                    @else
                     <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('この予約をキャンセルしますか？');" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="cancel-btn">キャンセル</button>
                     </form>
-
+                    @endif
                 </div>
             </div>
             <ul>
@@ -117,7 +82,6 @@
     </div>
 </div>
 
-{{-- カスタムモーダル --}}
 <div id="reviewModal" class="custom-modal">
     <div class="modal-content">
         <h3>評価機能のご案内</h3>
@@ -129,7 +93,6 @@
 
 @section('scripts')
 <script>
-    // 評価ボタンの制御（カスタムモーダル表示）
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.review-btn').forEach(button => {
             button.addEventListener('click', function(e) {
@@ -145,7 +108,6 @@
             });
         });
 
-        // お気に入りハート
         document.querySelectorAll('.heart-btn').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -155,23 +117,22 @@
                 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
                 fetch(`/favorites/${shopId}`, {
-                        method: isLiked ? 'DELETE' : 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': token,
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: isLiked ? null : JSON.stringify({
-                            shop_id: shopId
-                        })
+                    method: isLiked ? 'DELETE' : 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token,
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: isLiked ? null : JSON.stringify({
+                        shop_id: shopId
                     })
-                    .then(response => {
-                        if (response.ok) {
-                            this.textContent = isLiked ? '♡' : '❤️';
-                        } else {
-                            alert('エラーが発生しました');
-                        }
-                    });
+                }).then(response => {
+                    if (response.ok) {
+                        this.textContent = isLiked ? '♡' : '❤️';
+                    } else {
+                        alert('エラーが発生しました');
+                    }
+                });
             });
         });
     });
