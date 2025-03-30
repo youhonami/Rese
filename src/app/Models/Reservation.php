@@ -28,4 +28,14 @@ class Reservation extends Model
     {
         return $this->hasOne(Review::class);
     }
+
+    public function comment()
+    {
+        return $this->hasOne(Comment::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

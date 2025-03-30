@@ -35,7 +35,14 @@ class ShopController extends Controller
     public function detail($id)
     {
         $shop = Shop::findOrFail($id); // 指定IDの店舗を取得
-        return view('detail', compact('shop')); // detail.blade.php にデータを渡す
+
+        // この店舗の予約に紐づいたレビューとコメントを取得
+        $reviews = $shop->reservations()
+            ->with(['review', 'comment', 'user'])
+            ->whereHas('review')
+            ->get();
+
+        return view('detail', compact('shop', 'reviews'));
     }
 
     //リアルタイム検索

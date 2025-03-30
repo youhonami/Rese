@@ -14,6 +14,23 @@
         <img src="{{ asset('storage/' . $shop->img) }}" alt="{{ $shop->shop_name }}">
         <p class="tags">#{{ $shop->area }} #{{ $shop->genre }}</p>
         <p class="overview">{{ $shop->overview }}</p>
+
+        @if(isset($reviews) && $reviews->isNotEmpty())
+        <div class="review-list">
+            <h3>レビュー一覧</h3>
+            @foreach ($reviews as $r)
+            <div class="review-item">
+                <p class="review-user">{{ $r->user->name ?? '匿名' }}</p>
+                <p class="review-stars">評価: {{ str_repeat('⭐', $r->review->rating) }}</p>
+                @if($r->comment)
+                <p class="review-comment">コメント: {{ $r->comment->comment }}</p>
+                @endif
+            </div>
+            @endforeach
+        </div>
+        @else
+        <p class="no-review">この店舗にはまだレビューがありません。</p>
+        @endif
     </div>
 
     <div class="reservation-box">
@@ -23,41 +40,29 @@
         <form action="{{ route('reservations.store') }}" method="POST" novalidate>
             @csrf
             <input type="hidden" name="shop_id" value="{{ $shop->id }}">
-            @error('shop_id')
-            <div class="error-message">{{ $message }}</div>
-            @enderror
+            @error('shop_id')<div class="error-message">{{ $message }}</div>@enderror
 
             <label for="date">日付</label>
             <input type="date" id="date" name="date" value="{{ old('date') }}" required>
-            @error('date')
-            <div class="error-message">{{ $message }}</div>
-            @enderror
+            @error('date')<div class="error-message">{{ $message }}</div>@enderror
 
             <label for="time">時間</label>
             <select id="time" name="time" required>
                 <option value="" disabled {{ old('time') ? '' : 'selected' }}>時間を選択してください</option>
-                <option value="17:00" {{ old('time') == '17:00' ? 'selected' : '' }}>17:00</option>
-                <option value="18:00" {{ old('time') == '18:00' ? 'selected' : '' }}>18:00</option>
-                <option value="19:00" {{ old('time') == '19:00' ? 'selected' : '' }}>19:00</option>
-                <option value="20:00" {{ old('time') == '20:00' ? 'selected' : '' }}>20:00</option>
-                <option value="21:00" {{ old('time') == '21:00' ? 'selected' : '' }}>21:00</option>
+                @foreach(['17:00', '18:00', '19:00', '20:00', '21:00'] as $time)
+                <option value="{{ $time }}" {{ old('time') == $time ? 'selected' : '' }}>{{ $time }}</option>
+                @endforeach
             </select>
-            @error('time')
-            <div class="error-message">{{ $message }}</div>
-            @enderror
+            @error('time')<div class="error-message">{{ $message }}</div>@enderror
 
             <label for="number">人数</label>
             <select id="number" name="number" required>
                 <option value="" disabled {{ old('number') ? '' : 'selected' }}>人数を選択してください</option>
-                <option value="1" {{ old('number') == '1' ? 'selected' : '' }}>1人</option>
-                <option value="2" {{ old('number') == '2' ? 'selected' : '' }}>2人</option>
-                <option value="3" {{ old('number') == '3' ? 'selected' : '' }}>3人</option>
-                <option value="4" {{ old('number') == '4' ? 'selected' : '' }}>4人</option>
-                <option value="5" {{ old('number') == '5' ? 'selected' : '' }}>5人</option>
+                @for($i = 1; $i <= 5; $i++)
+                    <option value="{{ $i }}" {{ old('number') == $i ? 'selected' : '' }}>{{ $i }}人</option>
+                    @endfor
             </select>
-            @error('number')
-            <div class="error-message">{{ $message }}</div>
-            @enderror
+            @error('number')<div class="error-message">{{ $message }}</div>@enderror
 
             <div class="reservation-summary">
                 <p>Shop: {{ $shop->shop_name }}</p>

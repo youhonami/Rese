@@ -5,6 +5,7 @@
     max-width: 1200px;
     margin: 40px auto;
     gap: 20px;
+    align-items: flex-start; /* ← 上端を揃える */
 }
 
 /* 戻るボタン */
@@ -19,12 +20,15 @@
 /* 店舗情報 */
 .shop-info {
     width: 60%;
+    display: flex;
+    flex-direction: column;
 }
 
 .shop-info img {
     width: 100%;
+    height: auto;
     border-radius: 10px;
-    margin: 10px 0;
+    margin: 0; /* ← 上下の margin を消す */
 }
 
 .tags {
@@ -45,6 +49,12 @@
     background: #3366ff;
     color: white;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+    align-self: auto;
+    margin-top: 95px;
 }
 
 .reservation-box h2 {
@@ -99,4 +109,41 @@
     color: red;
     font-size: 14px;
     margin-top: 4px;
+}
+
+.review-list {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 10px;
+}
+
+.review-list h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.review-item {
+    margin-bottom: 15px;
+}
+
+.review-stars {
+    color: #ffc107;
+    font-size: 18px;
+}
+
+.review-user {
+    font-weight: bold;
+}
+
+.review-comment {
+    margin-top: 5px;
+    font-style: italic;
+    color: #555;
+}
+
+.no-review {
+    margin-top: 20px;
+    color: #888;
 }
