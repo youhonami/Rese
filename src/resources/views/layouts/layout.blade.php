@@ -14,11 +14,11 @@
 <body>
     <input type="checkbox" id="menu-toggle" class="menu-toggle">
 
-
     <div class="menu-modal">
         <label for="menu-toggle" class="close-btn">✕</label>
         <ul>
             <li><a href="{{ route('shops.index') }}">Home</a></li>
+
             @auth
             <li>
                 <form method="POST" action="{{ route('logout') }}">
@@ -26,13 +26,29 @@
                     <button type="submit" class="link-btn">Logout</button>
                 </form>
             </li>
+
+            {{-- 一般ユーザーのみにマイページ表示 --}}
+            @if (Auth::user()->role === 'user')
             <li><a href="{{ route('mypage') }}">Mypage</a></li>
+            @endif
+
+
+            {{-- 店舗代表者専用リンク --}}
+            @if (Auth::user()->role === 'representative')
+            <li><a href="{{ route('representative.dashboard') }}">店舗代表者ページ</a></li>
+            @endif
+
+            {{-- 管理者のみ表示 --}}
+            @if (Auth::user()->role === 'admin')
+            <li><a href="{{ route('admin.dashboard') }}">管理者ページ</a></li>
+            @endif
             @else
             <li><a href="{{ route('register') }}">Registration</a></li>
             <li><a href="{{ route('login') }}">Login</a></li>
             @endauth
         </ul>
     </div>
+
 
     <header>
         <div class="logo">
@@ -71,6 +87,7 @@
     <main>
         @yield('content')
     </main>
+
     @yield('scripts')
 </body>
 

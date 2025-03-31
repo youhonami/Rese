@@ -7,9 +7,10 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Auth\LoginController;
-
 use App\Http\Controllers\ReviewController;
-
+use App\Http\Controllers\Admin\StoreManagerController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Representative\ReservationController as RepresentativeReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,3 +70,32 @@ Route::get('/reservations/{id}/qrcode', [ReservationController::class, 'showQrCo
 
 Route::get('/reviews/{reservation}', [ReviewController::class, 'create'])->name('reviews.create');
 Route::post('/reviews/{reservation}', [ReviewController::class, 'store'])->name('reviews.store');
+
+//管理者関連
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/representatives/create', [AdminController::class, 'createRepresentative'])->name('admin.representatives.create');
+    Route::post('/representatives/store', [AdminController::class, 'storeRepresentative'])->name('admin.representatives.store');
+});
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/representatives/create', [AdminController::class, 'createRepresentative'])->name('admin.representatives.create');
+    Route::post('/representatives/store', [AdminController::class, 'store'])->name('admin.representatives.store'); // ✅ ここ重要
+});
+
+//店舗代表者関連
+Route::middleware(['auth', 'representative'])->group(function () {
+    Route::get('/representative/dashboard', [App\Http\Controllers\RepresentativeController::class, 'dashboard'])->name('representative.dashboard');
+});
+Route::middleware(['auth', 'can:isRepresentative'])->prefix('representative')->name('representative.')->group(function () {
+    Route::get('/shop', [App\Http\Controllers\Representative\ShopController::class, 'edit'])->name('shop.edit');
+    Route::post('/shop', [App\Http\Controllers\Representative\ShopController::class, 'store'])->name('shop.store');
+    Route::put('/shop', [App\Http\Controllers\Representative\ShopController::class, 'update'])->name('shop.update');
+});
+Route::middleware(['auth', 'representative'])->prefix('representative')->name('representative.')->group(function () {
+    Route::get('/reservations', [RepresentativeReservationController::class, 'index'])->name('reservations.index');
+});

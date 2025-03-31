@@ -37,17 +37,18 @@
         <h2>予約</h2>
 
         @auth
+        @if (Auth::user()->role !== 'admin')
         <form action="{{ route('reservations.store') }}" method="POST" novalidate>
             @csrf
             <input type="hidden" name="shop_id" value="{{ $shop->id }}">
             @error('shop_id')<div class="error-message">{{ $message }}</div>@enderror
 
             <label for="date">日付</label>
-            <input type="date" id="date" name="date" value="{{ old('date') }}" required>
+            <input type="date" id="date" name="date" value="{{ old('date') }}">
             @error('date')<div class="error-message">{{ $message }}</div>@enderror
 
             <label for="time">時間</label>
-            <select id="time" name="time" required>
+            <select id="time" name="time">
                 <option value="" disabled {{ old('time') ? '' : 'selected' }}>時間を選択してください</option>
                 @foreach(['17:00', '18:00', '19:00', '20:00', '21:00'] as $time)
                 <option value="{{ $time }}" {{ old('time') == $time ? 'selected' : '' }}>{{ $time }}</option>
@@ -56,7 +57,7 @@
             @error('time')<div class="error-message">{{ $message }}</div>@enderror
 
             <label for="number">人数</label>
-            <select id="number" name="number" required>
+            <select id="number" name="number">
                 <option value="" disabled {{ old('number') ? '' : 'selected' }}>人数を選択してください</option>
                 @for($i = 1; $i <= 5; $i++)
                     <option value="{{ $i }}" {{ old('number') == $i ? 'selected' : '' }}>{{ $i }}人</option>
@@ -73,6 +74,9 @@
 
             <button type="submit" class="reserve-btn">予約する</button>
         </form>
+        @else
+        <p style="color: red; font-weight: bold;">管理者アカウントでは予約できません。</p>
+        @endif
         @endauth
 
         @guest
