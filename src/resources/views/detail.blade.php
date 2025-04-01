@@ -37,7 +37,7 @@
         <h2>予約</h2>
 
         @auth
-        @if (Auth::user()->role !== 'admin')
+        @if (Auth::user()->role === 'user')
         <form action="{{ route('reservations.store') }}" method="POST" novalidate>
             @csrf
             <input type="hidden" name="shop_id" value="{{ $shop->id }}">
@@ -74,8 +74,10 @@
 
             <button type="submit" class="reserve-btn">予約する</button>
         </form>
+        @elseif (Auth::user()->role === 'representative')
+        <p class="error-message">店舗代表者は予約できません。</p>
         @else
-        <p style="color: red; font-weight: bold;">管理者アカウントでは予約できません。</p>
+        <p class="error-message">管理者アカウントでは予約できません。</p>
         @endif
         @endauth
 

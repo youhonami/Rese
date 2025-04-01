@@ -2,22 +2,21 @@
 
 @section('title', '予約一覧 - 店舗代表者')
 
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/representative_reservations.css') }}">
+@endsection
+
 @section('content')
-<div style="padding: 40px;">
+<div class="reservation-container">
     <h2>予約状況一覧</h2>
 
     {{-- 戻るボタン --}}
-    <div style="margin-bottom: 20px;">
-        <a href="{{ route('representative.dashboard') }}"
-            style="display: inline-block; padding: 8px 16px; background-color: #666; color: white; text-decoration: none; border-radius: 5px;">
-            ← 戻る
-        </a>
-    </div>
+    <a href="{{ route('representative.dashboard') }}" class="back-button">← 戻る</a>
 
     @if ($reservations->isEmpty())
-    <p>予約はまだありません。</p>
+    <p class="no-reservation">予約はまだありません。</p>
     @else
-    <table border="1" cellpadding="10" cellspacing="0">
+    <table class="reservation-table">
         <thead>
             <tr>
                 <th>ユーザー名</th>

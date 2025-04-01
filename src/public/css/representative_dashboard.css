@@ -1,0 +1,44 @@
+.representative-dashboard {
+    max-width: 800px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.representative-dashboard h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.representative-dashboard .shop-name {
+    font-size: 18px;
+    color: #444;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.representative-dashboard p {
+    font-size: 16px;
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.representative-dashboard .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #3366ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin: 10px;
+}
+
+.representative-dashboard .btn:hover {
+    background-color: #254edb;
+}
