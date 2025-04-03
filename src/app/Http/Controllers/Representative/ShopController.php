@@ -22,14 +22,28 @@ class ShopController extends Controller
             'area' => 'required|string',
             'genre' => 'required|string',
             'overview' => 'required|string',
+            'img' => 'nullable|image|max:2048',
         ]);
 
+        // ユーザーIDを追加
         $data['user_id'] = Auth::id();
 
-        Shop::updateOrCreate(['user_id' => Auth::id()], $data);
+        // 画像アップロード処理
+        if ($request->hasFile('img')) {
+            $path = $request->file('img')->store('shops-img', 'public');
+            $data['img'] = $path;
+        }
 
-        return redirect()->route('representative.shop.edit')->with('success', '店舗情報を保存しました');
+        // 店舗情報を保存（user_idで一意に更新 or 作成）
+        Shop::updateOrCreate(
+            ['user_id' => Auth::id()],
+            $data
+        );
+
+        return redirect()->route('representative.dashboard')->with('success', '店舗情報を保存しました');
     }
+
+
 
     public function update(Request $request)
     {
@@ -42,5 +56,12 @@ class ShopController extends Controller
         $shop = Shop::where('user_id', $user->id)->first();
 
         return view('representative.dashboard', compact('shop'));
+    }
+
+    public function form()
+    {
+        $shop = auth()->user()->shop;
+
+        return view('representative.shop_form', compact('shop'));
     }
 }

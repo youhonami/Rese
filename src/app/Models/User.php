@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Shop::class, 'favorites');
     }
+
+    public function shop()
+    {
+        return $this->hasOne(Shop::class);
+    }
 }

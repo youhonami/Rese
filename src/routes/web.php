@@ -11,17 +11,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Admin\StoreManagerController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Representative\ReservationController as RepresentativeReservationController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\Representative\ShopController as RepresentativeShopController;
 
 // 店舗一覧ページ
 Route::get('/', [ShopController::class, 'index'])->name('shops.index');
@@ -32,7 +22,6 @@ Route::view('/thanks', 'thanks')->name('thanks');
 
 //マイページ
 Route::get('/mypage', [UserController::class, 'mypage'])->middleware('auth')->name('mypage');
-
 
 //会員登録
 Route::get('/register', [RegisterController::class, 'show'])->name('register');
@@ -48,7 +37,7 @@ Route::view('/done', 'done')->name('done');
 // 予約キャンセル
 Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 
-// いいね機能（Ajax対応）
+// いいね機能
 Route::middleware('auth')->group(function () {
     Route::post('/favorites/{shop}', [FavoriteController::class, 'store'])->name('favorites.store');
     Route::delete('/favorites/{shop}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
@@ -74,28 +63,20 @@ Route::post('/reviews/{reservation}', [ReviewController::class, 'store'])->name(
 //管理者関連
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-});
-
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/representatives/create', [AdminController::class, 'createRepresentative'])->name('admin.representatives.create');
-    Route::post('/representatives/store', [AdminController::class, 'storeRepresentative'])->name('admin.representatives.store');
-});
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/representatives/create', [AdminController::class, 'createRepresentative'])->name('admin.representatives.create');
-    Route::post('/representatives/store', [AdminController::class, 'store'])->name('admin.representatives.store'); // ✅ ここ重要
+    Route::get('/representatives/create', [AdminController::class, 'createRepresentative'])->name('representatives.create');
+    Route::post('/representatives/store', [AdminController::class, 'store'])->name('representatives.store');
 });
 
 //店舗代表者関連
-Route::middleware(['auth', 'representative'])->group(function () {
-    Route::get('/representative/dashboard', [App\Http\Controllers\RepresentativeController::class, 'dashboard'])->name('representative.dashboard');
+Route::middleware(['auth', 'representative'])->prefix('representative')->name('representative.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\RepresentativeController::class, 'dashboard'])->name('dashboard');
+    Route::get('/reservations', [RepresentativeReservationController::class, 'index'])->name('reservations.index');
+    Route::get('/shops/form', [RepresentativeShopController::class, 'form'])->name('shops.form');
+    Route::post('/shops/store', [RepresentativeShopController::class, 'store'])->name('shops.store');
+    Route::put('/shops/update/{shop}', [RepresentativeShopController::class, 'update'])->name('shops.update');
 });
 Route::middleware(['auth', 'can:isRepresentative'])->prefix('representative')->name('representative.')->group(function () {
     Route::get('/shop', [App\Http\Controllers\Representative\ShopController::class, 'edit'])->name('shop.edit');
     Route::post('/shop', [App\Http\Controllers\Representative\ShopController::class, 'store'])->name('shop.store');
     Route::put('/shop', [App\Http\Controllers\Representative\ShopController::class, 'update'])->name('shop.update');
-});
-Route::middleware(['auth', 'representative'])->prefix('representative')->name('representative.')->group(function () {
-    Route::get('/reservations', [RepresentativeReservationController::class, 'index'])->name('reservations.index');
 });

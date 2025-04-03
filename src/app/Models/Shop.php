@@ -9,7 +9,14 @@ class Shop extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['shop_name', 'area', 'genre', 'overview', 'img'];
+    protected $fillable = [
+        'shop_name',
+        'area',
+        'genre',
+        'overview',
+        'img',
+        'user_id',
+    ];
 
     public function favoritedBy()
     {

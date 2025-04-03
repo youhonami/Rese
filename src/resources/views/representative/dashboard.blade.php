@@ -23,8 +23,9 @@
         予約状況を確認する
     </a>
 
-    <a href="#" class="btn" style="margin-top: 20px;">
+    <a href="{{ route('representative.shops.form') }}" class="btn" style="margin-top: 20px;">
         店舗情報を作成・更新する
     </a>
+
 </div>
 @endsection

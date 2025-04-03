@@ -1,0 +1,94 @@
+.shop-form-container {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #fdfdfd;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.shop-form-container h2 {
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #333;
+    text-align: center;
+}
+
+.success-message {
+    color: green;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    background-color: #3366ff;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.submit-btn:hover {
+    background-color: #254edb;
+}
+
+.shop-form-container img {
+    display: block;
+    margin-top: 10px;
+    max-width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.current-img-label {
+    margin-top: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+.current-img {
+    max-width: 200px;
+    border-radius: 8px;
+    display: block;
+    margin-top: 5px;
+}
