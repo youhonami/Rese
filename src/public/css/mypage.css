@@ -270,3 +270,68 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+    .mypage-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .reservation-section,
+    .favorite-section {
+        width: 100%;
+    }
+
+    .shop-container {
+        justify-content: center;
+    }
+
+    .shop-card {
+        display: flex; /* 横並びにする */
+        width: 100%;
+        max-width: none;
+        background-color: white;
+        overflow: hidden;
+    }
+
+    .shop-card img {
+        width: 40%; /* 画像部分の幅を制御 */
+        height: auto;
+        object-fit: contain;
+        background-color: black;
+    }
+
+    .shop-info {
+        width: 60%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .shop-info h2 {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .shop-info p {
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    .shop-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+
+    .heart-btn {
+        font-size: 20px;
+    }
+}

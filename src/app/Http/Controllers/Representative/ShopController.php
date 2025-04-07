@@ -3,65 +3,73 @@
 namespace App\Http\Controllers\Representative;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Shop;
+use App\Http\Requests\StoreShopRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Shop;
 
 class ShopController extends Controller
 {
-    public function edit()
+    /**
+     * 店舗情報フォーム表示
+     */
+    public function form()
     {
-        $shop = Shop::firstOrNew(['user_id' => Auth::id()]);
+        $shop = auth()->user()->shop;
         return view('representative.shop_form', compact('shop'));
     }
 
-    public function store(Request $request)
+    /**
+     * 店舗情報登録（新規 or 更新）
+     */
+    public function store(StoreShopRequest $request)
     {
-        $data = $request->validate([
-            'shop_name' => 'required|string|max:255',
-            'area' => 'required|string',
-            'genre' => 'required|string',
-            'overview' => 'required|string',
-            'img' => 'nullable|image|max:2048',
-        ]);
-
-        // ユーザーIDを追加
+        $data = $request->validated();
         $data['user_id'] = Auth::id();
 
-        // 画像アップロード処理
+        // 現在のショップを取得
+        $shop = Shop::where('user_id', Auth::id())->first();
+
+        // 画像がある場合は保存、ない場合は既存の画像を保持
         if ($request->hasFile('img')) {
             $path = $request->file('img')->store('shops-img', 'public');
             $data['img'] = $path;
+        } elseif ($shop && $shop->img) {
+            $data['img'] = $shop->img; // 既存画像を保持
+        } else {
+            // 新規登録かつ画像もない場合はエラー
+            return back()->withErrors(['img' => '画像は必須です'])->withInput();
         }
 
-        // 店舗情報を保存（user_idで一意に更新 or 作成）
-        Shop::updateOrCreate(
-            ['user_id' => Auth::id()],
-            $data
-        );
+        // 登録または更新
+        Shop::updateOrCreate(['user_id' => Auth::id()], $data);
 
         return redirect()->route('representative.dashboard')->with('success', '店舗情報を保存しました');
     }
 
 
-
-    public function update(Request $request)
+    /**
+     * 店舗情報更新（storeを再利用）
+     */
+    public function update(StoreShopRequest $request, Shop $shop)
     {
         return $this->store($request);
     }
 
+    /**
+     * ダッシュボード表示
+     */
     public function index()
     {
-        $user = Auth::user();
-        $shop = Shop::where('user_id', $user->id)->first();
-
+        $shop = Shop::where('user_id', Auth::id())->first();
         return view('representative.dashboard', compact('shop'));
     }
 
-    public function form()
+    /**
+     * 編集画面用（未使用なら削除してもOK）
+     */
+    public function edit()
     {
-        $shop = auth()->user()->shop;
-
+        $shop = Shop::firstOrNew(['user_id' => Auth::id()]);
         return view('representative.shop_form', compact('shop'));
     }
 }
