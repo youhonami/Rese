@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMiddleware::class,
         'representative' => \App\Http\Middleware\RepresentativeMiddleware::class,
         'can:isRepresentative' => \App\Http\Middleware\IsRepresentative::class,
+        'verified.email' => \App\Http\Middleware\EnsureEmailIsVerified::class,
     ];
 }

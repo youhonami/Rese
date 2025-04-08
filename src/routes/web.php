@@ -12,6 +12,9 @@ use App\Http\Controllers\Admin\StoreManagerController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Representative\ReservationController as RepresentativeReservationController;
 use App\Http\Controllers\Representative\ShopController as RepresentativeShopController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\LogoutController;
 
 // 店舗一覧ページ
 Route::get('/', [ShopController::class, 'index'])->name('shops.index');
@@ -80,3 +83,29 @@ Route::middleware(['auth', 'can:isRepresentative'])->prefix('representative')->n
     Route::post('/shop', [App\Http\Controllers\Representative\ShopController::class, 'store'])->name('shop.store');
     Route::put('/shop', [App\Http\Controllers\Representative\ShopController::class, 'update'])->name('shop.update');
 });
+
+// 認証済みユーザー専用のルート
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [ShopController::class, 'index'])->name('shops.index');
+    Route::get('/mypage', [UserController::class, 'mypage'])->name('mypage');
+});
+
+// メール認証ページ表示
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware(['auth'])->name('verification.notice');
+
+// 認証リンク再送信
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('status', 'verification-link-sent');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+// 認証リンククリック処理
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+// ログアウト
+Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
