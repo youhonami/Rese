@@ -17,6 +17,11 @@
 - 飲食店お気に入り追加、削除
 - 飲食店予約情報追加、削除
 - 検索（エリア、ジャンル、店名）
+- 飲食店予約情報変更
+- 評価機能、コメント
+- 管理者ページ（店舗代表者の作成）
+- 店舗代表者ページ（予約確認、店舗情報の作成と更新）
+- QR コード
 
 ## 使用技術(実行環境)
 
@@ -37,7 +42,7 @@
 
 **Docker ビルド**
 
-1.
+1. https://github.com/youhonami/Rese.git
 2. DockerDesktop アプリを立ち上げる
 3. `docker-compose up -d --build`
 
@@ -103,21 +108,10 @@ STRIPE_KEY=sk_test_あなたのAPIキー
 STRIPE_SECRET=sk_test_あなたのシークレットキー
 ```
 
-10. テストケース(PHPUnit) 設定
-
-```
-docker-compose exec mysql mysql -u root -p
-パスワードが求められたら root と記入
-CREATE DATABASE demo_test;
-
-docker-compose exec php bash
-php artisan migrate --env=testing --seed
-php artisan test
-```
-
 ## URL
 
 - 開発環境:http://localhost
 - phpMyAdmin:http://localhost:8080/
 - MailHog:http://localhost:8025/
+
 # Rese
