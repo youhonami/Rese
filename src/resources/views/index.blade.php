@@ -91,23 +91,20 @@
                     }
 
                     data.forEach(shop => {
+                        const heartIcon = shop.is_favorite ? '❤️' : '♡';
                         const shopCard = `
-                            <div class="shop-card">
-                                <img src="/storage/${shop.img}" alt="${shop.shop_name}">
-                                <div class="shop-info">
-                                    <h2>${shop.shop_name}</h2>
-                                    <p>#${shop.area} #${shop.genre}</p>
-                                    <div class="shop-footer">
-                                        <a href="/detail/${shop.id}" class="btn">詳しくみる</a>
-                                        @auth
-                                        <button class="heart-btn" data-shop-id="${shop.id}">♡</button>
-                                        @else
-                                        <span class="heart-disabled">♡</span>
-                                        @endauth
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+        <div class="shop-card">
+            <img src="/storage/${shop.img}" alt="${shop.shop_name}">
+            <div class="shop-info">
+                <h2>${shop.shop_name}</h2>
+                <p>#${shop.area} #${shop.genre}</p>
+                <div class="shop-footer">
+                    <a href="/detail/${shop.id}" class="btn">詳しくみる</a>
+                    <button class="heart-btn" data-shop-id="${shop.id}">${heartIcon}</button>
+                </div>
+            </div>
+        </div>
+    `;
                         container.insertAdjacentHTML('beforeend', shopCard);
                     });
                 })

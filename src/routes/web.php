@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/api/shops/search', [ShopController::class, 'search'])->name('shops.search');
 
 //ログイン（バリデーション）
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+//Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 //予約変更
 Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
@@ -85,27 +85,27 @@ Route::middleware(['auth', 'can:isRepresentative'])->prefix('representative')->n
 });
 
 // 認証済みユーザー専用のルート
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', [ShopController::class, 'index'])->name('shops.index');
-    Route::get('/mypage', [UserController::class, 'mypage'])->name('mypage');
-});
+//Route::middleware(['auth', 'verified'])->group(function () {
+//    Route::get('/', [ShopController::class, 'index'])->name('shops.index');
+//   Route::get('/mypage', [UserController::class, 'mypage'])->name('mypage');
+//});
 
 // メール認証ページ表示
-Route::get('/email/verify', function () {
-    return view('auth.verify');
-})->middleware(['auth'])->name('verification.notice');
+//Route::get('/email/verify', function () {
+//   return view('auth.verify');
+//})->middleware(['auth'])->name('verification.notice');
 
 // 認証リンク再送信
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
-    return back()->with('status', 'verification-link-sent');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+//Route::post('/email/verification-notification', function (Request $request) {
+//    $request->user()->sendEmailVerificationNotification();
+//    return back()->with('status', 'verification-link-sent');
+//})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 // 認証リンククリック処理
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
-    return redirect('/');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+//Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+//    $request->fulfill();
+//    return redirect('/');
+//})->middleware(['auth', 'signed'])->name('verification.verify');
 
 // ログアウト
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');

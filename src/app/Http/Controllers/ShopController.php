@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Shop;
+use Illuminate\Support\Facades\Auth;
+
 
 class ShopController extends Controller
 {
@@ -59,10 +61,18 @@ class ShopController extends Controller
         }
 
         if ($request->filled('keyword')) {
-            $query->where('shop_name', 'LIKE', '%' . $request->keyword . '%');
+            $query->where('shop_name', 'like', '%' . $request->keyword . '%');
         }
 
         $shops = $query->get();
+
+        if (Auth::check()) {
+            $favorites = Auth::user()->favorites->pluck('id')->toArray();
+            $shops->transform(function ($shop) use ($favorites) {
+                $shop->is_favorite = in_array($shop->id, $favorites);
+                return $shop;
+            });
+        }
 
         return response()->json($shops);
     }
