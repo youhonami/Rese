@@ -21,17 +21,10 @@ Route::get('/', [ShopController::class, 'index'])->name('shops.index');
 // 店舗詳細ページ
 Route::get('/detail/{shop}', [ShopController::class, 'detail'])->name('shops.detail');
 //thanks ページ用のルート
-Route::view('/thanks', 'thanks')->name('thanks');
+Route::view('/thanks', 'auth.thanks')->name('thanks');
 
 //マイページ
 Route::get('/mypage', [UserController::class, 'mypage'])->middleware('auth')->name('mypage');
-
-//会員登録
-Route::get('/register', [RegisterController::class, 'show'])->name('register');
-Route::post('/register', [RegisterController::class, 'store']);
-Route::get('/thanks', function () {
-    return view('auth.thanks');
-})->name('thanks');
 
 //予約
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
@@ -48,9 +41,6 @@ Route::middleware('auth')->group(function () {
 
 //検索
 Route::get('/api/shops/search', [ShopController::class, 'search'])->name('shops.search');
-
-//ログイン（バリデーション）
-//Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 //予約変更
 Route::get('/reservations/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservations.edit');
@@ -83,29 +73,6 @@ Route::middleware(['auth', 'can:isRepresentative'])->prefix('representative')->n
     Route::post('/shop', [App\Http\Controllers\Representative\ShopController::class, 'store'])->name('shop.store');
     Route::put('/shop', [App\Http\Controllers\Representative\ShopController::class, 'update'])->name('shop.update');
 });
-
-// 認証済みユーザー専用のルート
-//Route::middleware(['auth', 'verified'])->group(function () {
-//    Route::get('/', [ShopController::class, 'index'])->name('shops.index');
-//   Route::get('/mypage', [UserController::class, 'mypage'])->name('mypage');
-//});
-
-// メール認証ページ表示
-//Route::get('/email/verify', function () {
-//   return view('auth.verify');
-//})->middleware(['auth'])->name('verification.notice');
-
-// 認証リンク再送信
-//Route::post('/email/verification-notification', function (Request $request) {
-//    $request->user()->sendEmailVerificationNotification();
-//    return back()->with('status', 'verification-link-sent');
-//})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
-// 認証リンククリック処理
-//Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-//    $request->fulfill();
-//    return redirect('/');
-//})->middleware(['auth', 'signed'])->name('verification.verify');
 
 // ログアウト
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
