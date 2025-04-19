@@ -24,6 +24,7 @@
                 <th>時間</th>
                 <th>人数</th>
                 <th>店舗名</th>
+                <th>支払い</th> {{-- 追加 --}}
             </tr>
         </thead>
         <tbody>
@@ -34,6 +35,13 @@
                 <td>{{ $reservation->time }}</td>
                 <td>{{ $reservation->number }}人</td>
                 <td>{{ $reservation->shop->shop_name }}</td>
+                <td>
+                    @if ($reservation->is_paid)
+                    <span class="paid-label">支払済み</span>
+                    @else
+                    <span class="unpaid-label">未払い</span>
+                    @endif
+                </td>
             </tr>
             @endforeach
         </tbody>

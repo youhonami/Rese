@@ -15,7 +15,7 @@ use App\Http\Controllers\Representative\ShopController as RepresentativeShopCont
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LogoutController;
-
+use App\Http\Controllers\PaymentController;
 
 // 店舗一覧ページ
 Route::get('/', [ShopController::class, 'index'])->name('shops.index');
@@ -94,3 +94,7 @@ Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('status', 'verification-link-sent');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+//stripe決済
+Route::get('/payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');

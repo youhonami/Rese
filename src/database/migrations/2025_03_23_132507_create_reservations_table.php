@@ -20,6 +20,7 @@ class CreateReservationsTable extends Migration
             $table->date('date');
             $table->string('time');
             $table->integer('number');
+            $table->boolean('is_paid')->default(false);
             $table->timestamps();
         });
     }

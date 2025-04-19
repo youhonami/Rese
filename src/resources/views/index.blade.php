@@ -17,11 +17,14 @@
             <div class="shop-footer">
                 <a href="{{ route('shops.detail', ['shop' => $shop->id]) }}" class="btn">詳しくみる</a>
                 @auth
+                @if (Auth::user()->role === 'user')
                 <button class="heart-btn" data-shop-id="{{ $shop->id }}">
                     {{ Auth::user()->favorites->contains($shop->id) ? '❤️' : '♡' }}
                 </button>
+                @else
+                <span class="heart-disabled">♡</span>
+                @endif
                 @endauth
-
                 @guest
                 <span class="heart-disabled">♡</span>
                 @endguest

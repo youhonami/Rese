@@ -20,12 +20,22 @@
                 <span class="icon">⏰</span>
                 <span class="title">予約{{ $index + 1 }}</span>
                 <div class="card-actions">
-                    <a href="{{ route('reservations.qrcode', $reservation->id) }}" class="qr-btn">QRコード</a>
+                    <a href="{{ route('reservations.qrcode', $reservation->id) }}" class="qr-btn">QR</a>
 
                     @if ($isPast)
                     <span class="edit-disabled">変更不可</span>
                     @else
                     <a href="{{ route('reservations.edit', $reservation->id) }}" class="edit-btn">予約変更</a>
+                    @endif
+
+                    @if (!$isPast && !$reservation->is_paid)
+                    <a href="{{ route('payment.checkout', ['reservation_id' => $reservation->id]) }}" class="pay-btn">
+                        事前決済
+                    </a>
+                    @elseif($reservation->is_paid)
+                    <span class="paid-badge">支払済み</span>
+                    @elseif ($isPast)
+                    <span class="pay-disabled">決済不可</span>
                     @endif
 
                     @if (!$reservation->review)
