@@ -41,10 +41,10 @@ class FortifyServiceProvider extends ServiceProvider
             return new class implements RegisterResponse {
                 public function toResponse($request)
                 {
-                    // ✅ 登録後にログアウト
+                    //  登録後にログアウト
                     Auth::logout();
 
-                    // ✅ 未ログインで thanks ページへ
+                    // 未ログインで thanks ページへ
                     return redirect('/thanks');
                 }
             };
@@ -55,8 +55,17 @@ class FortifyServiceProvider extends ServiceProvider
             return new class implements LoginResponse {
                 public function toResponse($request)
                 {
+                    $user = Auth::user();
 
-                    // 常にトップページへリダイレクト
+                    if (!$user->hasVerifiedEmail()) {
+                        // 認証メールを送信
+                        $user->sendEmailVerificationNotification();
+
+                        //  認証ページへリダイレクト（ログアウトしない）
+                        return redirect()->route('verification.notice')
+                            ->with('status', '確認メールを送信しました。メールを確認してください。');
+                    }
+
                     return redirect('/');
                 }
             };

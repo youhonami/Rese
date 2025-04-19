@@ -16,6 +16,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LogoutController;
 
+
 // 店舗一覧ページ
 Route::get('/', [ShopController::class, 'index'])->name('shops.index');
 // 店舗詳細ページ
@@ -76,3 +77,20 @@ Route::middleware(['auth', 'can:isRepresentative'])->prefix('representative')->n
 
 // ログアウト
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+// 認証メール送信画面
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware(['auth'])->name('verification.notice');
+
+// 認証リンククリック時の処理
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+// 認証メール再送
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('status', 'verification-link-sent');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
