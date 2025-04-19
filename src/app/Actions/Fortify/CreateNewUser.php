@@ -35,8 +35,10 @@ class CreateNewUser implements CreatesNewUsers
         $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
+            'email_verified_at' => now(), // ← ✅ これが必須
             'password' => Hash::make($input['password']),
         ]);
+
         return $user;
     }
 }

@@ -41,6 +41,10 @@ class FortifyServiceProvider extends ServiceProvider
             return new class implements RegisterResponse {
                 public function toResponse($request)
                 {
+                    // ✅ 登録後にログアウト
+                    Auth::logout();
+
+                    // ✅ 未ログインで thanks ページへ
                     return redirect('/thanks');
                 }
             };
