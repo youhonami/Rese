@@ -24,7 +24,8 @@
                 <th>時間</th>
                 <th>人数</th>
                 <th>店舗名</th>
-                <th>支払い</th> {{-- 追加 --}}
+                <th>支払い</th>
+                <th>メール</th> {{-- 追加 --}}
             </tr>
         </thead>
         <tbody>
@@ -42,9 +43,15 @@
                     <span class="unpaid-label">未払い</span>
                     @endif
                 </td>
+                <td>
+                    <a href="{{ route('representative.mail.form', ['user' => $reservation->user->id]) }}" class="mail-btn">
+                        利用者にメール
+                    </a>
+                </td>
             </tr>
             @endforeach
         </tbody>
+
     </table>
     @endif
 </div>

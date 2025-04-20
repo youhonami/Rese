@@ -1,0 +1,84 @@
+.mail-form-container {
+    max-width: 600px;
+    margin: 60px auto;
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    font-family: "Segoe UI", sans-serif;
+}
+
+.mail-form-container h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+}
+
+.mail-form-container form div {
+    margin-bottom: 20px;
+}
+
+.mail-form-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+.mail-form-container input[type="text"],
+.mail-form-container textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #fff;
+    transition: border-color 0.2s;
+}
+
+.mail-form-container input[type="text"]:focus,
+.mail-form-container textarea:focus {
+    border-color: #3366ff;
+    outline: none;
+}
+
+.mail-form-container button[type="submit"] {
+    background-color: #3366ff;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: 0 auto;
+    transition: background-color 0.2s;
+}
+
+.mail-form-container button[type="submit"]:hover {
+    background-color: #254eda;
+}
+
+.mail-form-container p,
+.mail-form-container ul {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* エラー・成功メッセージ */
+.mail-form-container .error-message {
+    color: #dc3545;
+}
+
+.mail-form-container .success-message {
+    color: #28a745;
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+    .mail-form-container {
+        padding: 20px;
+    }
+}

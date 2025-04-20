@@ -16,6 +16,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Representative\MailController;
 
 // 店舗一覧ページ
 Route::get('/', [ShopController::class, 'index'])->name('shops.index');
@@ -98,3 +99,13 @@ Route::post('/email/verification-notification', function (Request $request) {
 //stripe決済
 Route::get('/payment/checkout', [PaymentController::class, 'checkout'])->name('payment.checkout');
 Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+
+//メール送信（店舗代表から利用者）
+Route::get('/representative/mail/{user}', [MailController::class, 'form'])->name('representative.mail.form');
+Route::middleware(['auth', 'representative'])->prefix('representative')->name('representative.')->group(function () {
+    // メールフォーム表示用
+    Route::get('/mail/{user}', [MailController::class, 'form'])->name('mail.form');
+
+    // メール送信処理
+    Route::post('/mail/send', [MailController::class, 'send'])->name('mail.send');
+});

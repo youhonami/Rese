@@ -71,3 +71,17 @@
     border-radius: 4px;
     font-size: 14px;
 }
+
+.mail-btn {
+    display: inline-block;
+    padding: 6px 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.mail-btn:hover {
+    background-color: #0056b3;
+}
