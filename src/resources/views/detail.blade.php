@@ -44,8 +44,10 @@
             @error('shop_id')<div class="error-message">{{ $message }}</div>@enderror
 
             <label for="date">日付</label>
-            <input type="date" id="date" name="date" value="{{ old('date') }}">
+            <input type="date" id="date" name="date" value="{{ old('date') }}"
+                min="{{ \Carbon\Carbon::tomorrow()->format('Y-m-d') }}">
             @error('date')<div class="error-message">{{ $message }}</div>@enderror
+
 
             <label for="time">時間</label>
             <select id="time" name="time">
