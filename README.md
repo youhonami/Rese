@@ -108,10 +108,31 @@ STRIPE_KEY=sk_test_あなたのAPIキー
 STRIPE_SECRET=sk_test_あなたのシークレットキー
 ```
 
-## URL
+10. 予約リマインダー機能 設定
+    予約当日の午前 10 時に、自動でリマインダーメールを送信する機能を実装しています。
 
+- 対象: 本日予約のユーザー
+- 送信時刻: 毎日 10:00（JST）
+- 使用コマンド: `php artisan reservations:remind`
+- 実装場所:
+  - `app/Console/Commands/SendReservationReminders.php`
+  - `app/Console/Kernel.php` にスケジュール定義あり
+
+### Docker 環境でのスケジュール実行設定（Mac）
+
+ホストマシン側で `crontab -e` に以下を追記してください：
+
+```crontab
+SHELL=/bin/bash
+TZ=Asia/Tokyo
+
+* * * * * /usr/local/bin/docker exec rese-php-1 php /var/www/artisan schedule:run >> /tmp/schedule.log 2>&1
+
+
+## URL
 - 開発環境:http://localhost
 - phpMyAdmin:http://localhost:8080/
 - MailHog:http://localhost:8025/
 
 # Rese
+```
