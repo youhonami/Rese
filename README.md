@@ -9,26 +9,29 @@
 ## 機能一覧
 
 - 会員登録
-- ログイン
+- ログイン(メール認証)
 - ログアウト
 - ユーザー情報取得
 - ユーザー飲食店お気に入り一覧取得
 - 飲食店一覧取得
-- 飲食店お気に入り追加、削除
+- 飲食店お気に入り(いいね)追加、削除
 - 飲食店予約情報追加、削除
 - 検索（エリア、ジャンル、店名）
 - 飲食店予約情報変更
 - 評価機能、コメント
 - 管理者ページ（店舗代表者の作成）
 - 店舗代表者ページ（予約確認、店舗情報の作成と更新）
-- QR コード
+- QR コード（マイページから）
+- 事前決済(マイページから可能)
 
 ## 使用技術(実行環境)
 
 - PHP7.4.9
-- Laravel8.83.27
+- Laravel8.83.29
 - MySQL8.0.26
 - MailHog
+- Stripe
+- AWS(EC2,S3,RDS,IAM,SES)
 
 ## テーブル設計
 
@@ -127,12 +130,27 @@ SHELL=/bin/bash
 TZ=Asia/Tokyo
 
 * * * * * /usr/local/bin/docker exec rese-php-1 php /var/www/artisan schedule:run >> /tmp/schedule.log 2>&1
-
+```
 
 ## URL
+
 - 開発環境:http://localhost
 - phpMyAdmin:http://localhost:8080/
 - MailHog:http://localhost:8025/
+- AWS 環境:http://18.176.61.9/
 
-# Rese
+##備考
+
+- 管理者のログイン ID とパスワード
+
+```
+aaa@aaa.co.jp
+aaaaaaaaaa
+```
+
+- 店舗代表者のログイン ID とパスワード
+
+```
+店舗名@rese.jp (例：sennin@rese.jp)
+ssssssssss(シーディング対象の店舗は共通)
 ```
