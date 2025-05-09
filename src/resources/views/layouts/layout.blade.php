@@ -12,8 +12,12 @@
 </head>
 
 <body>
-    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+    {{-- ハンバーガーアイコンのトグルは verify ページでは無効化 --}}
+    <input type="checkbox" id="menu-toggle" class="menu-toggle"
+        {{ Route::currentRouteName() === 'verification.notice' ? 'disabled' : '' }}>
 
+    {{-- verify ページではメニューを非表示 --}}
+    @if (Route::currentRouteName() !== 'verification.notice')
     <div class="menu-modal">
         <label for="menu-toggle" class="close-btn">✕</label>
         <ul>
@@ -27,18 +31,14 @@
                 </form>
             </li>
 
-            {{-- 一般ユーザーのみにマイページ表示 --}}
             @if (Auth::user()->role === 'user')
             <li><a href="{{ route('mypage') }}">Mypage</a></li>
             @endif
 
-
-            {{-- 店舗代表者専用リンク --}}
             @if (Auth::user()->role === 'representative')
             <li><a href="{{ route('representative.dashboard') }}">店舗代表者ページ</a></li>
             @endif
 
-            {{-- 管理者のみ表示 --}}
             @if (Auth::user()->role === 'admin')
             <li><a href="{{ route('admin.dashboard') }}">管理者ページ</a></li>
             @endif
@@ -48,12 +48,21 @@
             @endauth
         </ul>
     </div>
-
+    @endif
 
     <header>
         <div class="logo">
+            {{-- verify ページではアイコンを表示しない --}}
+            @if (Route::currentRouteName() !== 'verification.notice')
             <label for="menu-toggle" class="menu-icon">&#9776;</label>
+            @endif
+
+            {{-- ロゴリンク：verify ページではクリック無効にして見た目は維持 --}}
+            @if (Route::currentRouteName() === 'verification.notice')
+            <span class="logo-disabled">Rese</span>
+            @else
             <a href="{{ route('shops.index') }}">Rese</a>
+            @endif
         </div>
 
         {{-- 以下は index ページだけに表示 --}}

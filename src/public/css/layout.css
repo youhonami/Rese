@@ -178,3 +178,14 @@ header {
         align-items: flex-start;
     }
 }
+
+.logo-disabled {
+    font-size: 24px;
+    font-weight: bold;
+    color: #3366ff;
+    text-decoration: none;
+    cursor: default;
+    display: inline-block;
+    padding: 4px 0;
+    pointer-events: none;
+}
