@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Shop;
 use Illuminate\Support\Facades\Auth;
 
-
 class ShopController extends Controller
 {
     // 店舗一覧ページ
@@ -17,21 +16,22 @@ class ShopController extends Controller
         $genres = Shop::select('genre')->distinct()->pluck('genre');
 
         // 検索機能
-        $shops = Shop::query();
+        $shopsQuery = Shop::query();
+
         if ($request->filled('area')) {
-            $shops->where('area', $request->area);
+            $shopsQuery->where('area', $request->area);
         }
         if ($request->filled('genre')) {
-            $shops->where('genre', $request->genre);
+            $shopsQuery->where('genre', $request->genre);
         }
         if ($request->filled('keyword')) {
-            $shops->where('shop_name', 'like', '%' . $request->keyword . '%');
+            $shopsQuery->where('shop_name', 'like', '%' . $request->keyword . '%');
         }
-        $shops = $shops->get();
+
+        $shops = $shopsQuery->get();
 
         return view('index', compact('shops', 'areas', 'genres'));
     }
-
 
     // 店舗詳細ページ
     public function detail($id)
@@ -47,7 +47,7 @@ class ShopController extends Controller
         return view('detail', compact('shop', 'reviews'));
     }
 
-    //リアルタイム検索
+    // リアルタイム検索（AJAX用）
     public function search(Request $request)
     {
         $query = Shop::query();
@@ -66,6 +66,7 @@ class ShopController extends Controller
 
         $shops = $query->get();
 
+        // お気に入り情報を付加
         if (Auth::check()) {
             $favorites = Auth::user()->favorites->pluck('id')->toArray();
             $shops->transform(function ($shop) use ($favorites) {
