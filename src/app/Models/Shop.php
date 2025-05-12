@@ -32,8 +32,8 @@ class Shop extends Model
     public function detail(Shop $shop)
     {
         $reviews = $shop->reservations()
-            ->with(['review', 'comment', 'user']) // ユーザー情報も表示したい場合
-            ->whereHas('review') // レビューがある予約のみ取得
+            ->with(['review', 'comment', 'user'])
+            ->whereHas('review')
             ->get();
 
         return view('shops.detail', compact('shop', 'reviews'));

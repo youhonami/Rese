@@ -287,7 +287,7 @@
     }
 
     .shop-card {
-        display: flex; /* 横並びにする */
+        display: flex;
         width: 100%;
         max-width: none;
         background-color: white;
@@ -295,7 +295,7 @@
     }
 
     .shop-card img {
-        width: 40%; /* 画像部分の幅を制御 */
+        width: 40%; 
         height: auto;
         object-fit: contain;
         background-color: black;

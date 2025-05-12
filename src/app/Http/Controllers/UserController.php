@@ -13,7 +13,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $reservations = $user->reservations()->with('shop')->get();
-        $favorites = $user->favorites; // manyToManyでshopsとつながっている前提
+        $favorites = $user->favorites;
 
         return view('mypage', compact('user', 'reservations', 'favorites'));
     }

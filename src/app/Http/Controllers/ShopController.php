@@ -36,7 +36,7 @@ class ShopController extends Controller
     // 店舗詳細ページ
     public function detail($id)
     {
-        $shop = Shop::findOrFail($id); // 指定IDの店舗を取得
+        $shop = Shop::findOrFail($id);
 
         // この店舗の予約に紐づいたレビューとコメントを取得
         $reviews = $shop->reservations()

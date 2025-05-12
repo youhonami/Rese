@@ -20,7 +20,7 @@ class PaymentController extends Controller
             'line_items' => [[
                 'price_data' => [
                     'currency' => 'jpy',
-                    'unit_amount' => 1000, // ← 支払金額（例：1000円）
+                    'unit_amount' => 1000,
                     'product_data' => [
                         'name' => '予約：' . $reservation->shop->shop_name,
                     ],
@@ -37,7 +37,7 @@ class PaymentController extends Controller
 
     public function success(Request $request)
     {
-        // 支払成功後の処理（例：予約に「支払済み」フラグを付ける）
+        // 支払成功後の処理
         $reservation = \App\Models\Reservation::find($request->query('reservation_id'));
         if ($reservation) {
             $reservation->is_paid = true;

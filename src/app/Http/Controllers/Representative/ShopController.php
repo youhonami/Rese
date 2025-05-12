@@ -34,7 +34,7 @@ class ShopController extends Controller
             $path = $request->file('img')->store('shops-img', 'public');
             $data['img'] = $path;
         } elseif ($shop && $shop->img) {
-            $data['img'] = $shop->img; // 既存画像を保持
+            $data['img'] = $shop->img;
         } else {
             // 新規登録かつ画像もない場合はエラー
             return back()->withErrors(['img' => '画像は必須です'])->withInput();

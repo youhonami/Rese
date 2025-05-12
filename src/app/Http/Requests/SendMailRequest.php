@@ -8,7 +8,7 @@ class SendMailRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true; // 認証不要なら true
+        return true;
     }
 
     public function rules(): array

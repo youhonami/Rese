@@ -139,7 +139,7 @@ TZ=Asia/Tokyo
 - MailHog:http://localhost:8025/
 - AWS 環境:http://18.176.61.9/
 
-##備考
+## 備考
 
 - 管理者のログイン ID とパスワード
 

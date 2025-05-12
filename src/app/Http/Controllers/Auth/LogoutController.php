@@ -11,7 +11,6 @@ class LogoutController extends Controller
     public function logout(Request $request)
     {
         if (Auth::check()) {
-            // email_verified_at を null にする
             $user = Auth::user();
             $user->email_verified_at = null;
             $user->save();
