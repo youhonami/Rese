@@ -46,6 +46,19 @@
 **Docker ビルド**
 
 1. https://github.com/youhonami/Rese.git
+   ターミナルで git clone git@github.com:youhonami/Rese.git を実行
+   リモートリポジトリを作成
+   ターミナルで git remote set-url origin 新規リポジトリの紐付け先リンク　を実行
+   ターミナルで git remote -v を実行。変更を確認。
+   ローカルリポジトリの変更を新しいリモートリポジトリに反映
+   ```
+   git status
+   git add .
+   git commit -m "例：リモートリポジトリの変更"
+   git push origin main
+   ```
+
+````
 2. DockerDesktop アプリを立ち上げる
 3. `docker-compose up -d --build`
 
@@ -57,7 +70,7 @@ mysql:
     platform: linux/x86_64(この文追加)
     image: mysql:8.0.26
     environment:
-```
+````
 
 **Laravel 環境構築**
 

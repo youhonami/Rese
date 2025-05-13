@@ -7,7 +7,7 @@ docker/mysql/data/undo_002
 
 /docker/mysql/data/*
 
-/storage/*
+# /storage/*
 !/storage/app/
 !/storage/app/public/
 !/storage/app/public/images/
