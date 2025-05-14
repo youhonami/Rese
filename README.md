@@ -119,6 +119,7 @@ php artisan storage:link
 ```
 
 9. Stripe API 設定
+
    **Stripe の管理画面** から API キーを取得してください。
    `.env` ファイルを開き、以下のように設定してください。
 
@@ -168,8 +169,10 @@ aaaaaaaaaa
 - 店舗代表者のログイン ID とパスワード
 
 ```
-店舗名@rese.jp (例：sennin@rese.jp)
+店舗名@rese.jp (例：店舗名『仙人』の場合　sennin@rese.jp)
 ssssssssss(シーディング対象の店舗は共通)
+
+UserSeeder.phpを参照ください
 ```
 
 - AWS 環境でのメール認証について
