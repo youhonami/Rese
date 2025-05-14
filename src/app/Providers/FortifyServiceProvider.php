@@ -57,11 +57,15 @@ class FortifyServiceProvider extends ServiceProvider
                 {
                     $user = Auth::user();
 
+                    // admin / representative はメール認証スキップ
+                    if (in_array($user->role, ['admin', 'representative'])) {
+                        return redirect('/');
+                    }
+
+                    // 通常ユーザーはverifyに遷移、メール認証送信
                     if (!$user->hasVerifiedEmail()) {
-                        // 認証メールを送信
                         $user->sendEmailVerificationNotification();
 
-                        //  認証ページへリダイレクト（ログアウトしない）
                         return redirect()->route('verification.notice')
                             ->with('status', '確認メールを送信しました。メールを確認してください。');
                     }
