@@ -8,16 +8,19 @@
 
 @section('content')
 <div class="shop-detail">
-    <div class="shop-info">
-        <a href="{{ route('mypage') }}" class="back-btn">&lt; 戻る</a>
+    <div class="shop-detail__info">
+        <a href="{{ route('mypage') }}" class="shop-detail__back">&lt; 戻る</a>
         <h1>{{ $reservation->shop->shop_name }}</h1>
         <img src="{{ asset('storage/' . $reservation->shop->img) }}" alt="{{ $reservation->shop->shop_name }}">
-        <p class="tags">#{{ $reservation->shop->area }} #{{ $reservation->shop->genre }}</p>
-        <p class="overview">{{ $reservation->shop->overview }}</p>
+        <p class="shop-detail__tags">
+            #{{ optional($reservation->shop->area)->name ?? '未設定' }}
+            #{{ optional($reservation->shop->genre)->name ?? '未設定' }}
+        </p>
+        <p class="shop-detail__overview">{{ $reservation->shop->overview }}</p>
     </div>
 
-    <div class="reservation-box">
-        <h2>予約変更</h2>
+    <div class="shop-detail__form">
+        <h2 class="shop-detail__form-title">予約変更</h2>
 
         <form action="{{ route('reservations.update', $reservation->id) }}" method="POST">
             @csrf
@@ -27,7 +30,7 @@
             <label for="date">日付</label>
             <input type="date" id="date" name="date" value="{{ old('date', $reservation->date) }}" required>
             @error('date')
-            <div class="error-message">{{ $message }}</div>
+            <div class="shop-detail__error">{{ $message }}</div>
             @enderror
 
             <label for="time">時間</label>
@@ -38,7 +41,7 @@
                 @endforeach
             </select>
             @error('time')
-            <div class="error-message">{{ $message }}</div>
+            <div class="shop-detail__error">{{ $message }}</div>
             @enderror
 
             <label for="number">人数</label>
@@ -49,10 +52,10 @@
                     @endfor
             </select>
             @error('number')
-            <div class="error-message">{{ $message }}</div>
+            <div class="shop-detail__error">{{ $message }}</div>
             @enderror
 
-            <button type="submit" class="reserve-btn">変更を保存</button>
+            <button type="submit" class="shop-detail__submit">変更を保存</button>
         </form>
     </div>
 </div>

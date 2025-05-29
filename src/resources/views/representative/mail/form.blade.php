@@ -7,29 +7,30 @@
 @endsection
 
 @section('content')
-<div class="mail-form-container">
-    <h2>利用者へメール送信</h2>
+<div class="mail-form">
+    <h2 class="mail-form__title">利用者へメール送信</h2>
+
     <form action="{{ route('representative.mail.send') }}" method="POST">
         @csrf
         <input type="hidden" name="to" value="{{ $user->email }}">
 
-        <div>
-            <label>件名</label>
-            <input type="text" name="subject" value="{{ old('subject') }}">
+        <div class="mail-form__group">
+            <label class="mail-form__label">件名</label>
+            <input type="text" name="subject" value="{{ old('subject') }}" class="mail-form__input">
             @error('subject')
-            <p class="error-message">{{ $message }}</p>
+            <p class="mail-form__message mail-form__message--error">{{ $message }}</p>
             @enderror
         </div>
 
-        <div>
-            <label>本文</label>
-            <textarea name="message" rows="6">{{ old('message') }}</textarea>
+        <div class="mail-form__group">
+            <label class="mail-form__label">本文</label>
+            <textarea name="message" rows="6" class="mail-form__textarea">{{ old('message') }}</textarea>
             @error('message')
-            <p class="error-message">{{ $message }}</p>
+            <p class="mail-form__message mail-form__message--error">{{ $message }}</p>
             @enderror
         </div>
 
-        <button type="submit">送信する</button>
+        <button type="submit" class="mail-form__button">送信する</button>
     </form>
 </div>
 @endsection

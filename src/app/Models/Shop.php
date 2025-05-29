@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Area;
+use App\Models\Genre;
 
 class Shop extends Model
 {
@@ -11,8 +13,8 @@ class Shop extends Model
 
     protected $fillable = [
         'shop_name',
-        'area',
-        'genre',
+        'area_id',
+        'genre_id',
         'overview',
         'img',
         'user_id',
@@ -28,14 +30,13 @@ class Shop extends Model
         return $this->hasMany(Reservation::class);
     }
 
-
-    public function detail(Shop $shop)
+    public function area()
     {
-        $reviews = $shop->reservations()
-            ->with(['review', 'comment', 'user'])
-            ->whereHas('review')
-            ->get();
+        return $this->belongsTo(Area::class);
+    }
 
-        return view('shops.detail', compact('shop', 'reviews'));
+    public function genre()
+    {
+        return $this->belongsTo(Genre::class);
     }
 }

@@ -7,29 +7,30 @@
 @endsection
 
 @section('content')
-<div class="shop-container">
+<div class="shop-index">
     @foreach ($shops as $shop)
-    <div class="shop-card">
-        <img src="{{ asset('storage/' . $shop->img) }}" alt="{{ $shop->shop_name }}">
-        <div class="shop-info">
-            <h2>{{ $shop->shop_name }}</h2>
-            <p>#{{ $shop->area }} #{{ $shop->genre }}</p>
-            <div class="shop-footer">
-                <a href="{{ route('shops.detail', ['shop' => $shop->id]) }}" class="btn">詳しくみる</a>
+    <div class="shop-index__card">
+        <img src="{{ asset('storage/' . $shop->img) }}" alt="{{ $shop->shop_name }}" class="shop-index__image">
+        <div class="shop-index__info">
+            <h2 class="shop-index__info-title">{{ $shop->shop_name }}</h2>
+            <p class="shop-index__info-tags">
+                #{{ optional($shop->area)->name ?? '未設定' }} #{{ optional($shop->genre)->name ?? '未設定' }}
+            </p>
+            <div class="shop-index__footer">
+                <a href="{{ route('shops.detail', ['shop' => $shop->id]) }}" class="shop-index__btn">詳しくみる</a>
                 @auth
                 @if (Auth::user()->role === 'user')
-                <button class="heart-btn" data-shop-id="{{ $shop->id }}">
+                <button class="shop-index__heart" data-shop-id="{{ $shop->id }}">
                     {{ Auth::user()->favorites->contains($shop->id) ? '❤️' : '♡' }}
                 </button>
                 @else
-                <span class="heart-disabled">♡</span>
+                <span class="shop-index__heart--disabled">♡</span>
                 @endif
                 @endauth
                 @guest
-                <span class="heart-disabled">♡</span>
+                <span class="shop-index__heart--disabled">♡</span>
                 @endguest
             </div>
-
         </div>
     </div>
     @endforeach
@@ -39,13 +40,13 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.heart-btn').forEach(button => {
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        document.querySelectorAll('.shop-index__heart').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
-
                 const shopId = this.dataset.shopId;
                 const isLiked = this.textContent.trim() === '❤️';
-                const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
                 fetch(`/favorites/${shopId}`, {
                         method: isLiked ? 'DELETE' : 'POST',
@@ -54,7 +55,7 @@
                             'X-CSRF-TOKEN': token,
                             'X-Requested-With': 'XMLHttpRequest'
                         },
-                        body: isLiked ? null : JSON.stringify({
+                        body: JSON.stringify({
                             shop_id: shopId
                         })
                     })
@@ -67,58 +68,6 @@
                     });
             });
         });
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const area = document.querySelector('[name="area"]');
-        const genre = document.querySelector('[name="genre"]');
-        const keyword = document.querySelector('[name="keyword"]');
-        const container = document.querySelector('.shop-container');
-
-        function fetchShops() {
-            const params = new URLSearchParams({
-                area: area.value,
-                genre: genre.value,
-                keyword: keyword.value
-            });
-
-            fetch(`/api/shops/search?${params}`)
-                .then(res => res.json())
-                .then(data => {
-                    container.innerHTML = '';
-                    if (data.length === 0) {
-                        container.innerHTML = '<p>該当する店舗がありません。</p>';
-                        return;
-                    }
-
-                    data.forEach(shop => {
-                        const heartIcon = shop.is_favorite ? '❤️' : '♡';
-                        const shopCard = `
-        <div class="shop-card">
-            <img src="/storage/${shop.img}" alt="${shop.shop_name}">
-            <div class="shop-info">
-                <h2>${shop.shop_name}</h2>
-                <p>#${shop.area} #${shop.genre}</p>
-                <div class="shop-footer">
-                    <a href="/detail/${shop.id}" class="btn">詳しくみる</a>
-                    <button class="heart-btn" data-shop-id="${shop.id}">${heartIcon}</button>
-                </div>
-            </div>
-        </div>
-    `;
-                        container.insertAdjacentHTML('beforeend', shopCard);
-                    });
-                })
-                .catch(err => {
-                    console.error('検索エラー:', err);
-                });
-        }
-
-        area.addEventListener('change', fetchShops);
-        genre.addEventListener('change', fetchShops);
-        keyword.addEventListener('input', fetchShops);
     });
 </script>
 @endsection

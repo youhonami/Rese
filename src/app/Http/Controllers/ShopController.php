@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Shop;
+use App\Models\Area;
+use App\Models\Genre;
 use Illuminate\Support\Facades\Auth;
 
 class ShopController extends Controller
@@ -11,19 +13,21 @@ class ShopController extends Controller
     // 店舗一覧ページ
     public function index(Request $request)
     {
-        // エリアとジャンルのユニーク値を取得
-        $areas = Shop::select('area')->distinct()->pluck('area');
-        $genres = Shop::select('genre')->distinct()->pluck('genre');
+        // Area モデルの全レコードを取得（オブジェクトの配列）
+        $areas = Area::all();
+        $genres = Genre::all();
 
         // 検索機能
-        $shopsQuery = Shop::query();
+        $shopsQuery = Shop::with(['area', 'genre']);
 
         if ($request->filled('area')) {
-            $shopsQuery->where('area', $request->area);
+            $shopsQuery->where('area_id', $request->area);
         }
+
         if ($request->filled('genre')) {
-            $shopsQuery->where('genre', $request->genre);
+            $shopsQuery->where('genre_id', $request->genre);
         }
+
         if ($request->filled('keyword')) {
             $shopsQuery->where('shop_name', 'like', '%' . $request->keyword . '%');
         }
@@ -33,12 +37,12 @@ class ShopController extends Controller
         return view('index', compact('shops', 'areas', 'genres'));
     }
 
+
     // 店舗詳細ページ
     public function detail($id)
     {
-        $shop = Shop::findOrFail($id);
+        $shop = Shop::with(['area', 'genre'])->findOrFail($id);
 
-        // この店舗の予約に紐づいたレビューとコメントを取得
         $reviews = $shop->reservations()
             ->with(['review', 'comment', 'user'])
             ->whereHas('review')
@@ -50,14 +54,14 @@ class ShopController extends Controller
     // リアルタイム検索（AJAX用）
     public function search(Request $request)
     {
-        $query = Shop::query();
+        $query = Shop::with(['area', 'genre']);
 
         if ($request->filled('area')) {
-            $query->where('area', $request->area);
+            $query->where('area_id', $request->area);
         }
 
         if ($request->filled('genre')) {
-            $query->where('genre', $request->genre);
+            $query->where('genre_id', $request->genre);
         }
 
         if ($request->filled('keyword')) {
@@ -66,7 +70,6 @@ class ShopController extends Controller
 
         $shops = $query->get();
 
-        // お気に入り情報を付加
         if (Auth::check()) {
             $favorites = Auth::user()->favorites->pluck('id')->toArray();
             $shops->transform(function ($shop) use ($favorites) {

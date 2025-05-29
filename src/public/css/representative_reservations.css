@@ -1,4 +1,6 @@
-.reservation-container {
+/* Representative Reservations Page - BEM Style */
+
+.representative-reservations {
     max-width: 900px;
     margin: 60px auto;
     padding: 40px;
@@ -7,14 +9,14 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-.reservation-container h2 {
+.representative-reservations__title {
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
     text-align: center;
 }
 
-.back-button {
+.representative-reservations__back-btn {
     display: inline-block;
     padding: 8px 16px;
     background-color: #666;
@@ -24,37 +26,37 @@
     margin-bottom: 20px;
 }
 
-.reservation-table {
+.representative-reservations__table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.reservation-table th,
-.reservation-table td {
+.representative-reservations__table th,
+.representative-reservations__table td {
     border: 1px solid #ccc;
     padding: 12px;
     text-align: center;
 }
 
-.reservation-table th {
+.representative-reservations__table th {
     background-color: #f0f0f0;
     color: #333;
 }
 
-.reservation-table td {
+.representative-reservations__table td {
     background-color: #fff;
     color: #444;
 }
 
-.no-reservation {
+.representative-reservations__no-data {
     text-align: center;
     color: #888;
     margin-top: 30px;
     font-size: 16px;
 }
 
-.paid-label {
+.representative-reservations__label--paid {
     display: inline-block;
     padding: 6px 10px;
     background-color: #28a745;
@@ -63,7 +65,7 @@
     font-size: 14px;
 }
 
-.unpaid-label {
+.representative-reservations__label--unpaid {
     display: inline-block;
     padding: 6px 10px;
     background-color: #dc3545;
@@ -72,7 +74,7 @@
     font-size: 14px;
 }
 
-.mail-btn {
+.representative-reservations__mail-btn {
     display: inline-block;
     padding: 6px 10px;
     background-color: #007bff;
@@ -82,6 +84,6 @@
     font-size: 14px;
 }
 
-.mail-btn:hover {
+.representative-reservations__mail-btn:hover {
     background-color: #0056b3;
 }

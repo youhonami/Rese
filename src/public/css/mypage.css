@@ -1,19 +1,37 @@
-.mypage-container {
-    display: flex;
-    justify-content: space-between;
+/* MyPage Layout */
+.mypage {
     padding: 40px;
-    gap: 40px;
 }
 
-.reservation-section {
+.mypage__title {
+    font-size: 24px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.mypage__container {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.mypage__section {
     flex: 1;
 }
 
-.favorite-section {
+.mypage__section--favorites {
     flex: 1.5;
 }
 
-.reservation-card {
+.mypage__section-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Reservation Cards */
+.mypage__reservation-card {
     background: #3366ff;
     color: white;
     padding: 20px;
@@ -22,171 +40,173 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.card-header {
+.mypage__card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: bold;
     margin-bottom: 10px;
 }
 
-.shop-container {
+.mypage__card-actions > * {
+    margin-left: 5px;
+}
+
+.mypage__btn {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.mypage__btn--edit {
+    background-color: #28a745;
+}
+
+.mypage__btn--edit:hover {
+    background-color: #218838;
+}
+
+.mypage__btn--qr {
+    background-color: purple;
+}
+
+.mypage__btn--qr:hover {
+    background-color: #5a007a;
+}
+
+.mypage__btn--pay {
+    background-color: #17a2b8;
+}
+
+.mypage__btn--pay:hover {
+    background-color: #138496;
+}
+
+.mypage__btn--review {
+    background-color: #ffc107;
+    color: black;
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+.mypage__btn--review:hover {
+    background-color: #e68900;
+}
+
+.mypage__btn--cancel {
+    background-color: #ff4d4d;
+    font-size: 12px;
+    padding: 10px 12px;
+    display: inline-block;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+}
+
+.mypage__btn--cancel:hover {
+    background-color: #e60000;
+}
+
+.mypage__btn--disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+.mypage__badge {
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.mypage__badge--paid {
+    background-color: #28a745;
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.mypage__badge--reviewed {
+    background-color: #ffc107;
+    color: black;
+    font-size: 14px;
+    padding: 8px 12px;
+    display: inline-block;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+/* Favorite Shops */
+.mypage__shop-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.shop-card {
+.mypage__shop-card {
     background: white;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: calc(50% - 10px);
     max-width: 300px;
     min-width: 250px;
 }
 
-.shop-card img {
+.mypage__shop-img {
     width: 100%;
     height: 150px;
     object-fit: cover;
 }
 
-.shop-info {
+.mypage__shop-info {
     padding: 10px;
 }
 
-.shop-footer {
+.mypage__shop-name {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.mypage__shop-tags {
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.mypage__shop-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.btn {
+.mypage__btn--detail {
     background: #3366ff;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 5px;
-    text-decoration: none;
 }
 
-.heart-btn {
-    font-size: 28px;
+.mypage__btn--heart {
+    font-size: 24px;
     color: red;
-    cursor: pointer;
     background: none;
     border: none;
     padding: 0;
-    appearance: none;
     line-height: 1;
+    cursor: pointer;
     transition: transform 0.1s ease;
 }
 
-.heart-btn:hover {
+.mypage__btn--heart:hover {
     transform: scale(1.1);
 }
 
-.cancel-btn {
-    margin-top: 10px;
-    padding: 8px 12px;
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.cancel-btn:hover {
-    background-color: #e60000;
-}
-
-.edit-btn {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.edit-btn:hover {
-    background-color: #218838;
-}
-
-.qr-btn {
-    margin-top: 10px;
-    padding: 8px 12px;
-    background-color: purple;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.2s ease;
-}
-
-.qr-btn:hover {
-    background-color: #5a007a;
-}
-
-.review-btn {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #ffc107;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.review-btn:hover {
-    background-color: #e68900;
-}
-
-.reviewed-label {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #ffc107;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.review-disabled-btn {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #ccc;
-    color: #666;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-top: 10px;
-    cursor: not-allowed;
-}
-
-.review-completed {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #ffc107;
-    color: white;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-top: 10px;
-}
-
-.custom-modal {
+/* Modal */
+.modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -199,7 +219,7 @@
     justify-content: center;
 }
 
-.modal-content {
+.modal__content {
     background: #fff;
     padding: 30px;
     border-radius: 10px;
@@ -207,61 +227,12 @@
     width: 300px;
 }
 
-.modal-content h3 {
+.modal__title {
     margin-top: 0;
     color: #3366ff;
 }
 
-.modal-content button {
-    margin-top: 20px;
-    padding: 8px 16px;
-    background-color: #3366ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* キャンセル・編集ボタンが非アクティブな状態 */
-.edit-disabled,
-.cancel-disabled {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #aaa;
-    color: white;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-top: 10px;
-}
-
-/* モーダル */
-.custom-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-content {
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    width: 300px;
-}
-
-.modal-content h3 {
-    margin-top: 0;
-    color: #3366ff;
-}
-
-.modal-content button {
+.modal__btn {
     margin-top: 20px;
     padding: 8px 16px;
     background-color: #3366ff;
@@ -272,36 +243,25 @@
 }
 
 @media (max-width: 768px) {
-    .mypage-container {
+    .mypage__container {
         flex-direction: column;
         gap: 30px;
     }
 
-    .reservation-section,
-    .favorite-section {
-        width: 100%;
-    }
-
-    .shop-container {
-        justify-content: center;
-    }
-
-    .shop-card {
-        display: flex;
+    .mypage__shop-card {
+        flex-direction: row;
         width: 100%;
         max-width: none;
-        background-color: white;
-        overflow: hidden;
     }
 
-    .shop-card img {
-        width: 40%; 
+    .mypage__shop-img {
+        width: 40%;
         height: auto;
         object-fit: contain;
         background-color: black;
     }
 
-    .shop-info {
+    .mypage__shop-info {
         width: 60%;
         padding: 10px;
         display: flex;
@@ -309,63 +269,20 @@
         justify-content: space-between;
     }
 
-    .shop-info h2 {
+    .mypage__shop-name {
         font-size: 16px;
-        margin-bottom: 5px;
     }
 
-    .shop-info p {
+    .mypage__shop-tags {
         font-size: 12px;
-        margin-bottom: 10px;
     }
 
-    .shop-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: auto;
-    }
-
-    .btn {
+    .mypage__btn--detail {
         font-size: 12px;
         padding: 6px 8px;
     }
 
-    .heart-btn {
+    .mypage__btn--heart {
         font-size: 20px;
     }
-}
-
-.pay-btn {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #17a2b8;
-    color: white;
-    border-radius: 5px;
-    font-size: 14px;
-    text-decoration: none;
-    transition: background-color 0.2s ease;
-}
-
-.pay-btn:hover {
-    background-color: #138496;
-}
-
-.paid-badge {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #28a745;
-    color: white;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.pay-disabled {
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: #aaa;
-    color: white;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: not-allowed;
 }

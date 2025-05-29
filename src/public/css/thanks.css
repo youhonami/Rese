@@ -1,4 +1,6 @@
-.thanks-wrapper {
+/* Thanks Page - BEM Style */
+
+.thanks {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +8,7 @@
     background-color: #f2f2f2;
 }
 
-.thanks-card {
+.thanks__card {
     background-color: #fff;
     padding: 40px 60px;
     border-radius: 8px;
@@ -14,13 +16,13 @@
     text-align: center;
 }
 
-.message {
+.thanks__message {
     font-size: 20px;
     margin-bottom: 30px;
     color: #333;
 }
 
-.login-btn {
+.thanks__button {
     display: inline-block;
     background-color: #3366ff;
     color: white;
@@ -30,6 +32,6 @@
     font-weight: bold;
 }
 
-.login-btn:hover {
+.thanks__button:hover {
     background-color: #1f4ed8;
 }

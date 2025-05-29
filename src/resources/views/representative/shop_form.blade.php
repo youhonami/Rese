@@ -7,11 +7,11 @@
 @endsection
 
 @section('content')
-<div class="shop-form-container">
-    <h2>店舗情報の{{ isset($shop) && $shop->exists ? '編集' : '作成' }}</h2>
+<div class="shop-form">
+    <h2 class="shop-form__title">店舗情報の{{ isset($shop) && $shop->exists ? '編集' : '作成' }}</h2>
 
     @if(session('success'))
-    <p class="success-message">{{ session('success') }}</p>
+    <p class="shop-form__message--success">{{ session('success') }}</p>
     @endif
 
     <form action="{{ isset($shop) && $shop->exists ? route('representative.shops.update', $shop->id) : route('representative.shops.store') }}"
@@ -22,43 +22,56 @@
         @method('PUT')
         @endif
 
-        <div class="form-group">
-            <label for="shop_name">店舗名</label>
-            <input type="text" name="shop_name" id="shop_name" value="{{ old('shop_name', $shop->shop_name ?? '') }}">
-            @error('shop_name') <div class="error">{{ $message }}</div> @enderror
+        <div class="shop-form__group">
+            <label for="shop_name" class="shop-form__label">店舗名</label>
+            <input type="text" name="shop_name" id="shop_name" value="{{ old('shop_name', $shop->shop_name ?? '') }}" class="shop-form__input">
+            @error('shop_name') <div class="shop-form__error">{{ $message }}</div> @enderror
         </div>
 
-        <div class="form-group">
-            <label for="area">エリア</label>
-            <input type="text" name="area" id="area" value="{{ old('area', $shop->area ?? '') }}">
-            @error('area') <div class="error">{{ $message }}</div> @enderror
+        <div class="shop-form__group">
+            <label for="area_id" class="shop-form__label">エリア</label>
+            <select name="area_id" id="area_id" class="shop-form__input">
+                <option value="">選択してください</option>
+                @foreach($areas as $area)
+                <option value="{{ $area->id }}" {{ old('area_id', $shop->area_id ?? '') == $area->id ? 'selected' : '' }}>
+                    {{ $area->name }}
+                </option>
+                @endforeach
+            </select>
+            @error('area_id') <div class="shop-form__error">{{ $message }}</div> @enderror
         </div>
 
-        <div class="form-group">
-            <label for="genre">ジャンル</label>
-            <input type="text" name="genre" id="genre" value="{{ old('genre', $shop->genre ?? '') }}">
-            @error('genre') <div class="error">{{ $message }}</div> @enderror
+        <div class="shop-form__group">
+            <label for="genre_id" class="shop-form__label">ジャンル</label>
+            <select name="genre_id" id="genre_id" class="shop-form__input">
+                <option value="">選択してください</option>
+                @foreach($genres as $genre)
+                <option value="{{ $genre->id }}" {{ old('genre_id', $shop->genre_id ?? '') == $genre->id ? 'selected' : '' }}>
+                    {{ $genre->name }}
+                </option>
+                @endforeach
+            </select>
+            @error('genre_id') <div class="shop-form__error">{{ $message }}</div> @enderror
         </div>
 
-        <div class="form-group">
-            <label for="overview">概要</label>
-            <textarea name="overview" id="overview" rows="4">{{ old('overview', $shop->overview ?? '') }}</textarea>
-            @error('overview') <div class="error">{{ $message }}</div> @enderror
+        <div class="shop-form__group">
+            <label for="overview" class="shop-form__label">概要</label>
+            <textarea name="overview" id="overview" rows="4" class="shop-form__textarea">{{ old('overview', $shop->overview ?? '') }}</textarea>
+            @error('overview') <div class="shop-form__error">{{ $message }}</div> @enderror
         </div>
 
-        <div class="form-group">
-            <label for="img">画像</label>
-            <input type="file" name="img" id="img">
-            @error('img') <div class="error">{{ $message }}</div> @enderror
+        <div class="shop-form__group">
+            <label for="img" class="shop-form__label">画像</label>
+            <input type="file" name="img" id="img" class="shop-form__file">
+            @error('img') <div class="shop-form__error">{{ $message }}</div> @enderror
 
-            @if(isset($shop->img))
-            <p class="current-img-label">現在の画像：</p>
-            <img src="{{ asset('storage/' . $shop->img) }}" alt="現在の店舗画像" class="current-img">
+            @if(!empty($shop->img))
+            <p class="shop-form__preview-label">現在の画像：</p>
+            <img src="{{ asset('storage/' . $shop->img) }}" alt="現在の店舗画像" class="shop-form__current-img">
             @endif
-
         </div>
 
-        <button type="submit" class="submit-btn">
+        <button type="submit" class="shop-form__submit">
             {{ isset($shop) && $shop->exists ? '更新する' : '登録する' }}
         </button>
     </form>

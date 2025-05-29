@@ -1,4 +1,6 @@
-.shop-form-container {
+/* Shop Form Page - BEM Style */
+
+.shop-form {
     max-width: 700px;
     margin: 60px auto;
     padding: 40px;
@@ -7,34 +9,34 @@
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
-.shop-form-container h2 {
+.shop-form__title {
     font-size: 24px;
     margin-bottom: 25px;
     color: #333;
     text-align: center;
 }
 
-.success-message {
+.shop-form__message--success {
     color: green;
     text-align: center;
     margin-bottom: 20px;
     font-weight: bold;
 }
 
-.form-group {
+.shop-form__group {
     margin-bottom: 20px;
 }
 
-.form-group label {
+.shop-form__label {
     display: block;
     font-weight: bold;
     margin-bottom: 8px;
     color: #444;
 }
 
-.form-group input[type="text"],
-.form-group textarea,
-.form-group input[type="file"] {
+.shop-form__input,
+.shop-form__textarea,
+.shop-form__file {
     width: 100%;
     padding: 10px;
     font-size: 16px;
@@ -43,17 +45,17 @@
     box-sizing: border-box;
 }
 
-.form-group textarea {
+.shop-form__textarea {
     resize: vertical;
 }
 
-.error {
+.shop-form__error {
     color: red;
     font-size: 14px;
     margin-top: 5px;
 }
 
-.submit-btn {
+.shop-form__submit {
     display: block;
     width: 100%;
     background-color: #3366ff;
@@ -68,11 +70,11 @@
     margin-top: 20px;
 }
 
-.submit-btn:hover {
+.shop-form__submit:hover {
     background-color: #254edb;
 }
 
-.shop-form-container img {
+.shop-form__preview {
     display: block;
     margin-top: 10px;
     max-width: 100%;
@@ -80,13 +82,13 @@
     border-radius: 6px;
 }
 
-.current-img-label {
+.shop-form__preview-label {
     margin-top: 8px;
     font-weight: bold;
     color: #444;
 }
 
-.current-img {
+.shop-form__current-img {
     max-width: 200px;
     border-radius: 8px;
     display: block;

@@ -1,5 +1,6 @@
-/* ショップコンテナ */
-.shop-container {
+/* Shop Index Page - BEM Style */
+
+.shop-index {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
@@ -7,43 +8,41 @@
     justify-content: center;
 }
 
-/* ショップカード */
-.shop-card {
+.shop-index__card {
     background: white;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.shop-card img {
+.shop-index__image {
     width: 100%;
     height: 200px;
     object-fit: cover;
 }
 
-.shop-info {
+.shop-index__info {
     padding: 15px;
 }
 
-.shop-info h2 {
+.shop-index__info-title {
     font-size: 18px;
     margin-bottom: 5px;
 }
 
-.shop-info p {
+.shop-index__info-tags {
     font-size: 14px;
     color: #666;
     margin-bottom: 10px;
 }
 
-/* ショップカードのフッター */
-.shop-footer {
+.shop-index__footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.btn {
+.shop-index__btn {
     display: inline-block;
     padding: 8px 12px;
     background: #3366ff;
@@ -52,7 +51,7 @@
     border-radius: 5px;
 }
 
-.heart-btn {
+.shop-index__heart {
     font-size: 28px;
     color: red;
     cursor: pointer;
@@ -64,11 +63,11 @@
     transition: transform 0.1s ease;
 }
 
-.heart-btn:hover {
+.shop-index__heart:hover {
     transform: scale(1.1);
 }
 
-.heart-disabled {
+.shop-index__heart--disabled {
     font-size: 28px;
     color: #ccc;
     cursor: not-allowed;

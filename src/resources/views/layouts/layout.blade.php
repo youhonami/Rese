@@ -12,68 +12,63 @@
 </head>
 
 <body>
-    {{-- ハンバーガーアイコンのトグルは verify ページでは無効化 --}}
-    <input type="checkbox" id="menu-toggle" class="menu-toggle"
+    <input type="checkbox" id="menu-toggle" class="menu__toggle"
         {{ Route::currentRouteName() === 'verification.notice' ? 'disabled' : '' }}>
 
-    {{-- verify ページではメニューを非表示 --}}
     @if (Route::currentRouteName() !== 'verification.notice')
-    <div class="menu-modal">
-        <label for="menu-toggle" class="close-btn">✕</label>
-        <ul>
-            <li><a href="{{ route('shops.index') }}">Home</a></li>
+    <div class="menu__modal">
+        <label for="menu-toggle" class="menu__close">✕</label>
+        <ul class="menu__list">
+            <li class="menu__item"><a href="{{ route('shops.index') }}" class="menu__link">Home</a></li>
 
             @auth
-            <li>
+            @php $role = Auth::user()->role; @endphp
+
+            <li class="menu__item">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" class="link-btn">Logout</button>
+                    <button type="submit" class="menu__logout-btn">Logout</button>
                 </form>
             </li>
 
-            @if (Auth::user()->role === 'user')
-            <li><a href="{{ route('mypage') }}">Mypage</a></li>
+            @if ($role === 'user')
+            <li class="menu__item"><a href="{{ route('mypage') }}" class="menu__link">Mypage</a></li>
+            @elseif ($role === 'representative')
+            <li class="menu__item"><a href="{{ route('representative.dashboard') }}" class="menu__link">店舗代表者ページ</a></li>
+            @elseif ($role === 'admin')
+            <li class="menu__item"><a href="{{ route('admin.dashboard') }}" class="menu__link">管理者ページ</a></li>
             @endif
-
-            @if (Auth::user()->role === 'representative')
-            <li><a href="{{ route('representative.dashboard') }}">店舗代表者ページ</a></li>
-            @endif
-
-            @if (Auth::user()->role === 'admin')
-            <li><a href="{{ route('admin.dashboard') }}">管理者ページ</a></li>
-            @endif
-            @else
-            <li><a href="{{ route('register') }}">Registration</a></li>
-            <li><a href="{{ route('login') }}">Login</a></li>
             @endauth
+
+            @guest
+            <li class="menu__item"><a href="{{ route('register') }}" class="menu__link">Registration</a></li>
+            <li class="menu__item"><a href="{{ route('login') }}" class="menu__link">Login</a></li>
+            @endguest
         </ul>
     </div>
     @endif
 
-    <header>
-        <div class="logo">
-            {{-- verify ページではアイコンを表示しない --}}
+    <header class="header">
+        <div class="header__logo">
             @if (Route::currentRouteName() !== 'verification.notice')
-            <label for="menu-toggle" class="menu-icon">&#9776;</label>
+            <label for="menu-toggle" class="header__menu-icon">&#9776;</label>
             @endif
 
-            {{-- ロゴリンク：verify ページではクリック無効にして見た目は維持 --}}
             @if (Route::currentRouteName() === 'verification.notice')
-            <span class="logo-disabled">Rese</span>
+            <span class="header__logo-disabled">Rese</span>
             @else
-            <a href="{{ route('shops.index') }}">Rese</a>
+            <a href="{{ route('shops.index') }}" class="header__logo-link">Rese</a>
             @endif
         </div>
 
-        {{-- 以下は index ページだけに表示 --}}
         @if (Route::currentRouteName() === 'shops.index')
-        <div class="filter">
-            <form action="{{ route('shops.index') }}" method="GET">
+        <div class="header__filter">
+            <form id="filter-form" action="{{ route('shops.index') }}" method="GET">
                 <select name="area">
                     <option value="">All area</option>
                     @foreach ($areas ?? [] as $area)
-                    <option value="{{ $area }}" {{ request('area') == $area ? 'selected' : '' }}>
-                        {{ $area }}
+                    <option value="{{ $area->id }}" {{ request('area') == $area->id ? 'selected' : '' }}>
+                        {{ $area->name }}
                     </option>
                     @endforeach
                 </select>
@@ -81,8 +76,8 @@
                 <select name="genre">
                     <option value="">All genre</option>
                     @foreach ($genres ?? [] as $genre)
-                    <option value="{{ $genre }}" {{ request('genre') == $genre ? 'selected' : '' }}>
-                        {{ $genre }}
+                    <option value="{{ $genre->id }}" {{ request('genre') == $genre->id ? 'selected' : '' }}>
+                        {{ $genre->name }}
                     </option>
                     @endforeach
                 </select>
@@ -98,6 +93,29 @@
     </main>
 
     @yield('scripts')
+
+    @if (Route::currentRouteName() === 'shops.index')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('filter-form');
+            const area = form.querySelector('[name="area"]');
+            const genre = form.querySelector('[name="genre"]');
+            const keyword = form.querySelector('[name="keyword"]');
+
+            area.addEventListener('change', () => form.submit());
+            genre.addEventListener('change', () => form.submit());
+            keyword.addEventListener('input', debounce(() => form.submit(), 500));
+
+            function debounce(callback, delay) {
+                let timeout;
+                return function() {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(callback, delay);
+                };
+            }
+        });
+    </script>
+    @endif
 </body>
 
 </html>

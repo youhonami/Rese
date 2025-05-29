@@ -7,96 +7,102 @@
 @endsection
 
 @section('content')
-<div class="mypage-container">
-    <div class="reservation-section">
-        <h2>予約状況</h2>
-        @foreach ($reservations as $index => $reservation)
-        @php
-        $reservationDateTime = \Carbon\Carbon::parse($reservation->date . ' ' . $reservation->time);
-        $isPast = now()->greaterThanOrEqualTo($reservationDateTime);
-        @endphp
-        <div class="reservation-card">
-            <div class="card-header">
-                <span class="icon">⏰</span>
-                <span class="title">予約{{ $index + 1 }}</span>
-                <div class="card-actions">
-                    <a href="{{ route('reservations.qrcode', $reservation->id) }}" class="qr-btn">QR</a>
+<div class="mypage">
+    <h1 class="mypage__title">{{ $user->name }}さんのマイページ</h1>
 
-                    @if ($isPast)
-                    <span class="edit-disabled">変更不可</span>
-                    @else
-                    <a href="{{ route('reservations.edit', $reservation->id) }}" class="edit-btn">予約変更</a>
-                    @endif
+    <div class="mypage__container">
+        <section class="mypage__section mypage__section--reservations">
+            <h2 class="mypage__section-title">予約状況</h2>
 
-                    @if (!$isPast && !$reservation->is_paid)
-                    <a href="{{ route('payment.checkout', ['reservation_id' => $reservation->id]) }}" class="pay-btn">
-                        事前決済
-                    </a>
-                    @elseif($reservation->is_paid)
-                    <span class="paid-badge">支払済み</span>
-                    @elseif ($isPast)
-                    <span class="pay-disabled">決済不可</span>
-                    @endif
+            @foreach ($reservations as $index => $reservation)
+            @php
+            $reservationDateTime = \Carbon\Carbon::parse($reservation->date . ' ' . $reservation->time);
+            $isPast = now()->greaterThanOrEqualTo($reservationDateTime);
+            @endphp
+            <div class="mypage__reservation-card">
+                <div class="mypage__card-header">
+                    <span class="mypage__icon">⏰</span>
+                    <span class="mypage__card-title">予約{{ $index + 1 }}</span>
+                    <div class="mypage__card-actions">
+                        <a href="{{ route('reservations.qrcode', $reservation->id) }}" class="mypage__btn mypage__btn--qr">QR</a>
 
-                    @if (!$reservation->review)
-                    <a href="{{ route('reviews.create', $reservation->id) }}"
-                        class="review-btn"
-                        data-review-time="{{ $reservationDateTime->format('Y-m-d H:i') }}">
-                        評価する
-                    </a>
-                    @else
-                    <span class="review-completed">評価済み</span>
-                    @endif
+                        @if ($isPast)
+                        <span class="mypage__btn mypage__btn--disabled">変更不可</span>
+                        @else
+                        <a href="{{ route('reservations.edit', $reservation->id) }}" class="mypage__btn mypage__btn--edit">予約変更</a>
+                        @endif
 
-                    @if ($isPast)
-                    <span class="cancel-disabled">来店済み</span>
-                    @else
-                    <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('この予約をキャンセルしますか？');" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="cancel-btn">キャンセル</button>
-                    </form>
-                    @endif
-                </div>
-            </div>
-            <ul>
-                <li>Shop: {{ $reservation->shop->shop_name }}</li>
-                <li>Date: {{ $reservation->date }}</li>
-                <li>Time: {{ $reservation->time }}</li>
-                <li>Number: {{ $reservation->number }}人</li>
-            </ul>
-        </div>
-        @endforeach
-    </div>
+                        @if (!$isPast && !$reservation->is_paid)
+                        <a href="{{ route('payment.checkout', ['reservation_id' => $reservation->id]) }}" class="mypage__btn mypage__btn--pay">事前決済</a>
+                        @elseif($reservation->is_paid)
+                        <span class="mypage__badge mypage__badge--paid">支払済み</span>
+                        @elseif ($isPast)
+                        <span class="mypage__btn mypage__btn--disabled">決済不可</span>
+                        @endif
 
-    <div class="favorite-section">
-        <h2>{{ $user->name }}さん</h2>
-        <h3>お気に入り店舗</h3>
-        <div class="shop-container">
-            @foreach ($favorites as $shop)
-            <div class="shop-card">
-                <img src="{{ asset('storage/' . $shop->img) }}" alt="{{ $shop->shop_name }}">
-                <div class="shop-info">
-                    <h2>{{ $shop->shop_name }}</h2>
-                    <p>#{{ $shop->area }} #{{ $shop->genre }}</p>
-                    <div class="shop-footer">
-                        <a href="{{ route('shops.detail', ['shop' => $shop->id]) }}" class="btn">詳しくみる</a>
-                        <button type="button" class="heart-btn" data-shop-id="{{ $shop->id }}">
-                            {{ Auth::user()->favorites->contains($shop->id) ? '❤️' : '♡' }}
-                        </button>
+                        @if (!$reservation->review)
+                        <a href="{{ route('reviews.create', $reservation->id) }}"
+                            class="mypage__btn mypage__btn--review"
+                            data-review-time="{{ $reservationDateTime->format('Y-m-d H:i') }}">
+                            評価する
+                        </a>
+                        @else
+                        <span class="mypage__badge mypage__badge--reviewed">評価済み</span>
+                        @endif
+
+                        @if ($isPast)
+                        <span class="mypage__btn mypage__btn--disabled">来店済み</span>
+                        @else
+                        <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('この予約をキャンセルしますか？');" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="mypage__btn mypage__btn--cancel">キャンセル</button>
+                        </form>
+                        @endif
                     </div>
                 </div>
+                <ul class="mypage__reservation-info">
+                    <li>Shop: {{ $reservation->shop->shop_name }}</li>
+                    <li>Date: {{ $reservation->date }}</li>
+                    <li>Time: {{ $reservation->time }}</li>
+                    <li>Number: {{ $reservation->number }}人</li>
+                </ul>
             </div>
             @endforeach
-        </div>
+        </section>
+
+        <section class="mypage__section mypage__section--favorites">
+            <h2 class="mypage__section-title">お気に入り店舗</h2>
+
+            <div class="mypage__shop-list">
+                @foreach ($favorites as $shop)
+                <div class="mypage__shop-card">
+                    <img src="{{ asset('storage/' . $shop->img) }}" alt="{{ $shop->shop_name }}" class="mypage__shop-img">
+                    <div class="mypage__shop-info">
+                        <h3 class="mypage__shop-name">{{ $shop->shop_name }}</h3>
+                        <p class="mypage__shop-tags">
+                            #{{ optional($shop->area)->name ?? '未設定' }} #{{ optional($shop->genre)->name ?? '未設定' }}
+                        </p>
+                        <div class="mypage__shop-footer">
+                            <a href="{{ route('shops.detail', ['shop' => $shop->id]) }}" class="mypage__btn mypage__btn--detail">詳しくみる</a>
+                            <button type="button" class="mypage__btn mypage__btn--heart" data-shop-id="{{ $shop->id }}">
+                                {{ Auth::user()->favorites->contains($shop->id) ? '❤️' : '♡' }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </section>
     </div>
 </div>
 
-<div id="reviewModal" class="custom-modal">
-    <div class="modal-content">
-        <h3>評価機能のご案内</h3>
-        <p id="reviewModalMessage"></p>
-        <button onclick="closeReviewModal()">OK</button>
+<!-- 評価モーダル -->
+<div id="reviewModal" class="modal">
+    <div class="modal__content">
+        <h3 class="modal__title">評価機能のご案内</h3>
+        <p id="reviewModalMessage" class="modal__text"></p>
+        <button onclick="closeReviewModal()" class="modal__btn">OK</button>
     </div>
 </div>
 @endsection
@@ -104,7 +110,7 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.review-btn').forEach(button => {
+        document.querySelectorAll('.mypage__btn--review').forEach(button => {
             button.addEventListener('click', function(e) {
                 const dateTimeStr = this.dataset.reviewTime;
                 const reservationDate = new Date(dateTimeStr.replace(/-/g, '/'));
@@ -118,7 +124,7 @@
             });
         });
 
-        document.querySelectorAll('.heart-btn').forEach(button => {
+        document.querySelectorAll('.mypage__btn--heart').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
 

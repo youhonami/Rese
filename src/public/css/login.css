@@ -1,4 +1,6 @@
-.login-container {
+/* Login Page - BEM Style */
+
+.login {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -6,7 +8,7 @@
     background: #f2f2f2;
 }
 
-.login-box {
+.login__box {
     background: white;
     width: 350px;
     border-radius: 10px;
@@ -14,7 +16,7 @@
     overflow: hidden;
 }
 
-.login-header {
+.login__header {
     background: #3366ff;
     color: white;
     padding: 15px;
@@ -23,11 +25,11 @@
     text-align: left;
 }
 
-form {
+.login__form {
     padding: 20px;
 }
 
-.form-group {
+.login__form-group {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
@@ -35,14 +37,13 @@ form {
     padding-bottom: 5px;
 }
 
-.form-group .icon {
+.login__icon {
     margin-right: 10px;
     font-size: 18px;
     color: #333;
 }
 
-input[type="email"],
-input[type="password"] {
+.login__input {
     flex: 1;
     border: none;
     outline: none;
@@ -50,12 +51,23 @@ input[type="password"] {
     background: transparent;
 }
 
-.form-actions {
+.login__form-group-wrapper {
+    margin-bottom: 15px;
+}
+
+.login__error-message {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-left: 28px;
+}
+
+.login__actions {
     text-align: right;
     margin-top: 20px;
 }
 
-button {
+.login__button {
     padding: 8px 15px;
     background: #3366ff;
     color: white;
@@ -65,17 +77,6 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.login__button:hover {
     background: #264d99;
-}
-
-.form-group-wrapper {
-    margin-bottom: 15px;
-}
-
-.error-message {
-    color: red;
-    font-size: 13px;
-    margin-top: 5px;
-    margin-left: 28px;
 }

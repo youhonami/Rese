@@ -7,16 +7,15 @@
 @endsection
 
 @section('content')
-<div class="reservation-container">
-    <h2>予約状況一覧</h2>
+<div class="representative-reservations">
+    <h2 class="representative-reservations__title">予約状況一覧</h2>
 
-    {{-- 戻るボタン --}}
-    <a href="{{ route('representative.dashboard') }}" class="back-button">← 戻る</a>
+    <a href="{{ route('representative.dashboard') }}" class="representative-reservations__back-btn">← 戻る</a>
 
     @if ($reservations->isEmpty())
-    <p class="no-reservation">予約はまだありません。</p>
+    <p class="representative-reservations__no-data">予約はまだありません。</p>
     @else
-    <table class="reservation-table">
+    <table class="representative-reservations__table">
         <thead>
             <tr>
                 <th>ユーザー名</th>
@@ -25,7 +24,7 @@
                 <th>人数</th>
                 <th>店舗名</th>
                 <th>支払い</th>
-                <th>メール</th> {{-- 追加 --}}
+                <th>メール</th>
             </tr>
         </thead>
         <tbody>
@@ -38,20 +37,19 @@
                 <td>{{ $reservation->shop->shop_name }}</td>
                 <td>
                     @if ($reservation->is_paid)
-                    <span class="paid-label">支払済み</span>
+                    <span class="representative-reservations__label--paid">支払済み</span>
                     @else
-                    <span class="unpaid-label">未払い</span>
+                    <span class="representative-reservations__label--unpaid">未払い</span>
                     @endif
                 </td>
                 <td>
-                    <a href="{{ route('representative.mail.form', ['user' => $reservation->user->id]) }}" class="mail-btn">
+                    <a href="{{ route('representative.mail.form', ['user' => $reservation->user->id]) }}" class="representative-reservations__mail-btn">
                         利用者にメール
                     </a>
                 </td>
             </tr>
             @endforeach
         </tbody>
-
     </table>
     @endif
 </div>

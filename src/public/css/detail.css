@@ -1,4 +1,5 @@
-/* 店舗詳細ページレイアウト */
+/* Shop Detail Page - BEM Style */
+
 .shop-detail {
     display: flex;
     justify-content: space-between;
@@ -8,8 +9,7 @@
     align-items: flex-start;
 }
 
-/* 戻るボタン */
-.back-btn {
+.shop-detail__back {
     display: inline-block;
     margin-bottom: 20px;
     color: #333;
@@ -17,33 +17,31 @@
     font-size: 18px;
 }
 
-/* 店舗情報 */
-.shop-info {
+.shop-detail__info {
     width: 60%;
     display: flex;
     flex-direction: column;
 }
 
-.shop-info img {
+.shop-detail__info img {
     width: 100%;
     height: auto;
     border-radius: 10px;
     margin: 0;
 }
 
-.tags {
+.shop-detail__tags {
     font-size: 14px;
     color: #666;
     margin-bottom: 10px;
 }
 
-.overview {
+.shop-detail__overview {
     font-size: 16px;
     line-height: 1.5;
 }
 
-/* 予約ボックス */
-.reservation-box {
+.shop-detail__form {
     width: 35%;
     padding: 20px;
     background: #3366ff;
@@ -57,18 +55,18 @@
     margin-top: 95px;
 }
 
-.reservation-box h2 {
+.shop-detail__form-title {
     font-size: 20px;
     margin-bottom: 15px;
 }
 
-.reservation-box label {
+.shop-detail__form label {
     display: block;
     margin-top: 10px;
 }
 
-.reservation-box input,
-.reservation-box select {
+.shop-detail__form input,
+.shop-detail__form select {
     width: 100%;
     padding: 8px;
     margin-top: 5px;
@@ -76,20 +74,13 @@
     border-radius: 5px;
 }
 
-/* 予約概要 */
-.reservation-summary {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 15px;
-    border-radius: 5px;
-    margin-top: 20px;
+.shop-detail__error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
 }
 
-.reservation-summary p {
-    font-size: 16px;
-}
-
-/* 予約ボタン */
-.reserve-btn {
+.shop-detail__submit {
     width: 100%;
     padding: 10px;
     margin-top: 20px;
@@ -101,53 +92,56 @@
     cursor: pointer;
 }
 
-.reserve-btn:hover {
+.shop-detail__submit:hover {
     background: #e0e0e0;
 }
 
-/* バリデーションエラー */
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 4px;
-}
-
-/* レビュー一覧 */
-.review-list {
+.shop-detail__review-list {
     margin-top: 30px;
     padding: 20px;
     background: #f8f8f8;
     border-radius: 10px;
 }
 
-.review-list h3 {
+.shop-detail__review-title {
     font-size: 20px;
     margin-bottom: 15px;
     color: #333;
 }
 
-.review-item {
+.shop-detail__review-item {
     margin-bottom: 15px;
 }
 
-.review-stars {
+.shop-detail__stars {
     color: #ffc107;
     font-size: 18px;
 }
 
-.review-user {
+.shop-detail__review-user {
     font-weight: bold;
 }
 
-.review-comment {
+.shop-detail__review-comment {
     margin-top: 5px;
     font-style: italic;
     color: #555;
 }
 
-.no-review {
+.shop-detail__no-review {
     margin-top: 20px;
     color: #888;
+}
+
+.shop-detail__summary {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.shop-detail__summary p {
+    font-size: 16px;
 }
 
 @media (max-width: 768px) {
@@ -155,11 +149,11 @@
         flex-direction: column;
     }
 
-    .shop-info {
+    .shop-detail__info {
         width: 100%;
     }
 
-    .reservation-box {
+    .shop-detail__form {
         width: 100%;
         margin-top: 30px;
     }

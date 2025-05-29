@@ -7,32 +7,34 @@
 @endsection
 
 @section('content')
-<div class="login-container">
-    <div class="login-box">
-        <div class="login-header">Login</div>
-        <form method="POST" action="{{ route('login') }}" novalidate>
+<div class="login">
+    <div class="login__box">
+        <div class="login__header">Login</div>
+        <form method="POST" action="{{ route('login') }}" class="login__form" novalidate>
             @csrf
-            <div class="form-group-wrapper">
-                <div class="form-group">
-                    <span class="icon">📧</span>
-                    <input type="email" name="email" placeholder="Email" value="{{ old('email') }}">
+
+            <div class="login__form-group-wrapper">
+                <div class="login__form-group">
+                    <span class="login__icon">📧</span>
+                    <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" class="login__input">
                 </div>
                 @error('email')
-                <div class="error-message">{{ $message }}</div>
+                <div class="login__error-message">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="form-group-wrapper">
-                <div class="form-group">
-                    <span class="icon">🔒</span>
-                    <input type="password" name="password" placeholder="Password">
+            <div class="login__form-group-wrapper">
+                <div class="login__form-group">
+                    <span class="login__icon">🔒</span>
+                    <input type="password" name="password" placeholder="Password" class="login__input">
                 </div>
                 @error('password')
-                <div class="error-message">{{ $message }}</div>
+                <div class="login__error-message">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="form-actions">
-                <button type="submit">ログイン</button>
+
+            <div class="login__actions">
+                <button type="submit" class="login__button">ログイン</button>
             </div>
         </form>
     </div>

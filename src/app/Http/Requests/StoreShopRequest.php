@@ -15,13 +15,13 @@ class StoreShopRequest extends FormRequest
     {
         $rules = [
             'shop_name' => ['required', 'string', 'max:255'],
-            'area' => ['required', 'string', 'max:255'],
-            'genre' => ['required', 'string', 'max:255'],
+            'area_id' => ['required', 'exists:areas,id'],
+            'genre_id' => ['required', 'exists:genres,id'],
             'overview' => ['required', 'string', 'max:1000'],
             'img' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ];
 
-        // 新規作成時のみ img を必須に
+        // 新規作成時のみ画像を必須にする
         if (!$this->route('shop')) {
             $rules['img'][] = 'required';
         }
@@ -33,8 +33,10 @@ class StoreShopRequest extends FormRequest
     {
         return [
             'shop_name.required' => '店舗名は必須です。',
-            'area.required' => 'エリアは必須です。',
-            'genre.required' => 'ジャンルは必須です。',
+            'area_id.required' => 'エリアは必須です。',
+            'area_id.exists' => '選択されたエリアが存在しません。',
+            'genre_id.required' => 'ジャンルは必須です。',
+            'genre_id.exists' => '選択されたジャンルが存在しません。',
             'overview.required' => '概要は必須です。',
             'img.required' => '画像は必須です。',
             'img.image' => '画像ファイルをアップロードしてください。',

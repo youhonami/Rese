@@ -1,4 +1,6 @@
-.review-page {
+/* Review Page - BEM Style */
+
+.review {
     display: flex;
     justify-content: space-between;
     max-width: 1200px;
@@ -6,51 +8,51 @@
     gap: 40px;
 }
 
-.shop-info {
+.review__shop {
     width: 55%;
 }
 
-.shop-info h2 {
+.review__shop-title {
     font-size: 24px;
     margin-bottom: 10px;
 }
 
-.shop-info img {
+.review__shop-img {
     width: 100%;
     border-radius: 10px;
     margin: 10px 0;
 }
 
-.tags {
+.review__tags {
     font-size: 14px;
     color: #666;
     margin-bottom: 10px;
 }
 
-.overview {
+.review__overview {
     font-size: 16px;
     line-height: 1.6;
 }
 
-.review-form-box {
+.review__form-box {
     width: 40%;
     background: #f5f5f5;
     padding: 25px;
     border-radius: 10px;
 }
 
-.review-form-box h3 {
+.review__form-title {
     font-size: 20px;
     margin-bottom: 15px;
 }
 
-.review-form-box label {
+.review__form-label {
     display: block;
     margin-top: 15px;
     font-weight: bold;
 }
 
-.review-form-box textarea {
+.review__textarea {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -60,7 +62,7 @@
     height: 150px;
 }
 
-.star-rating {
+.review__rating {
     direction: rtl;
     display: inline-flex;
     font-size: 28px;
@@ -68,30 +70,30 @@
     margin-top: 5px;
 }
 
-.star-rating input[type="radio"] {
+.review__rating input[type="radio"] {
     display: none;
 }
 
-.star-rating label {
+.review__rating label {
     color: #ccc;
     cursor: pointer;
     padding: 0 5px;
 }
 
-.star-rating input[type="radio"]:checked ~ label,
-.star-rating label:hover,
-.star-rating label:hover ~ label {
+.review__rating input[type="radio"]:checked ~ label,
+.review__rating label:hover,
+.review__rating label:hover ~ label {
     color: #ffc107;
 }
 
-.btn-group {
+.review__btn-group {
     display: flex;
     gap: 10px;
     margin-top: 20px;
 }
 
-.btn,
-.back-btn {
+.review__btn,
+.review__btn--back {
     padding: 10px 20px;
     font-size: 16px;
     border-radius: 5px;
@@ -103,18 +105,24 @@
     transition: background-color 0.2s ease;
 }
 
-.btn {
+.review__btn {
     background-color: #3366ff;
 }
 
-.btn:hover {
+.review__btn:hover {
     background-color: #264d99;
 }
 
-.back-btn {
+.review__btn--back {
     background-color: #aaa;
 }
 
-.back-btn:hover {
+.review__btn--back:hover {
     background-color: #888;
+}
+
+.review__error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
 }

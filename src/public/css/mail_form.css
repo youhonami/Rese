@@ -1,4 +1,6 @@
-.mail-form-container {
+/* Mail Form Page - BEM Style */
+
+.mail-form {
     max-width: 600px;
     margin: 60px auto;
     background-color: #fdfdfd;
@@ -8,26 +10,26 @@
     font-family: "Segoe UI", sans-serif;
 }
 
-.mail-form-container h2 {
+.mail-form__title {
     font-size: 24px;
     margin-bottom: 30px;
     color: #333;
     text-align: center;
 }
 
-.mail-form-container form div {
+.mail-form__group {
     margin-bottom: 20px;
 }
 
-.mail-form-container label {
+.mail-form__label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
     color: #444;
 }
 
-.mail-form-container input[type="text"],
-.mail-form-container textarea {
+.mail-form__input,
+.mail-form__textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
@@ -37,13 +39,13 @@
     transition: border-color 0.2s;
 }
 
-.mail-form-container input[type="text"]:focus,
-.mail-form-container textarea:focus {
+.mail-form__input:focus,
+.mail-form__textarea:focus {
     border-color: #3366ff;
     outline: none;
 }
 
-.mail-form-container button[type="submit"] {
+.mail-form__button {
     background-color: #3366ff;
     color: white;
     padding: 12px 24px;
@@ -56,29 +58,26 @@
     transition: background-color 0.2s;
 }
 
-.mail-form-container button[type="submit"]:hover {
+.mail-form__button:hover {
     background-color: #254eda;
 }
 
-.mail-form-container p,
-.mail-form-container ul {
+.mail-form__message {
     text-align: center;
     font-size: 14px;
     margin-top: 10px;
 }
 
-/* エラー・成功メッセージ */
-.mail-form-container .error-message {
+.mail-form__message--error {
     color: #dc3545;
 }
 
-.mail-form-container .success-message {
+.mail-form__message--success {
     color: #28a745;
 }
 
-/* モバイル対応 */
 @media (max-width: 768px) {
-    .mail-form-container {
+    .mail-form {
         padding: 20px;
     }
 }

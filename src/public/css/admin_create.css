@@ -1,4 +1,6 @@
-.representative-create-container {
+/* Representative Create Page - BEM Style */
+
+.representative-create {
     max-width: 600px;
     margin: 40px auto;
     background-color: #f9f9f9;
@@ -7,41 +9,41 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.representative-create-container h2 {
+.representative-create__title {
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
 }
 
-.representative-create-container label {
+.representative-create__form-group {
+    margin-top: 15px;
+}
+
+.representative-create__label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
 }
 
-.representative-create-container input {
+.representative-create__input {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-.representative-create-container .form-group {
-    margin-top: 15px;
-}
-
-.representative-create-container .error {
+.representative-create__error {
     color: red;
     font-size: 14px;
     margin-top: 5px;
 }
 
-.representative-create-container .success {
+.representative-create__success {
     color: green;
     margin-bottom: 15px;
 }
 
-.representative-create-container button {
+.representative-create__button {
     margin-top: 20px;
     padding: 10px 20px;
     background-color: #3366ff;
@@ -52,12 +54,6 @@
     cursor: pointer;
 }
 
-.representative-create-container button:hover {
+.representative-create__button:hover {
     background-color: #264d99;
-}
-
-.error {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
 }

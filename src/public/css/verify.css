@@ -1,4 +1,6 @@
-.verify-container {
+/* Verify Page - BEM Style */
+
+.verify {
     max-width: 500px;
     margin: 60px auto;
     padding: 30px;
@@ -9,20 +11,20 @@
     font-family: "Helvetica Neue", sans-serif;
 }
 
-.verify-container h2 {
+.verify__title {
     font-size: 24px;
     color: #333;
     margin-bottom: 15px;
 }
 
-.verify-container p {
+.verify__text {
     font-size: 16px;
     color: #555;
     margin: 10px 0;
     line-height: 1.6;
 }
 
-.success-message {
+.verify__message--success {
     color: #2d8a3d;
     background-color: #e8f9ec;
     border: 1px solid #b2e2c2;
@@ -31,11 +33,11 @@
     border-radius: 6px;
 }
 
-form {
+.verify__form {
     margin-top: 20px;
 }
 
-button[type="submit"] {
+.verify__button {
     padding: 10px 20px;
     font-size: 16px;
     background-color: #3366ff;
@@ -46,26 +48,26 @@ button[type="submit"] {
     transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
+.verify__button:hover {
     background-color: #254edb;
 }
 
-/* レスポンシブ対応 */
+/* Responsive */
 @media (max-width: 600px) {
-    .verify-container {
+    .verify {
         padding: 20px;
         margin: 30px 10px;
     }
 
-    .verify-container h2 {
+    .verify__title {
         font-size: 20px;
     }
 
-    .verify-container p {
+    .verify__text {
         font-size: 14px;
     }
 
-    button[type="submit"] {
+    .verify__button {
         width: 100%;
     }
 }

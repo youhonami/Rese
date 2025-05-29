@@ -7,10 +7,10 @@
 @endsection
 
 @section('content')
-<div class="done-container">
-    <div class="done-box">
-        <p class="done-message">ご予約ありがとうございます</p>
-        <a href="{{ route('shops.index') }}" class="done-button">戻る</a>
+<div class="reservation-done">
+    <div class="reservation-done__box">
+        <p class="reservation-done__message">ご予約ありがとうございます</p>
+        <a href="{{ route('shops.index') }}" class="reservation-done__button">戻る</a>
     </div>
 </div>
 @endsection

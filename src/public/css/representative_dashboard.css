@@ -1,4 +1,6 @@
-.representative-dashboard {
+/* Representative Dashboard - BEM Style */
+
+.rep-dashboard {
     max-width: 800px;
     margin: 60px auto;
     padding: 40px;
@@ -8,26 +10,26 @@
     text-align: center;
 }
 
-.representative-dashboard h2 {
+.rep-dashboard__title {
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
 }
 
-.representative-dashboard .shop-name {
+.rep-dashboard__shop-name {
     font-size: 18px;
     color: #444;
     font-weight: 600;
     margin-bottom: 20px;
 }
 
-.representative-dashboard p {
+.rep-dashboard__text {
     font-size: 16px;
     margin-bottom: 30px;
     color: #666;
 }
 
-.representative-dashboard .btn {
+.rep-dashboard__button {
     display: inline-block;
     padding: 12px 24px;
     background-color: #3366ff;
@@ -39,6 +41,6 @@
     margin: 10px;
 }
 
-.representative-dashboard .btn:hover {
+.rep-dashboard__button:hover {
     background-color: #254edb;
 }

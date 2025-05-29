@@ -7,43 +7,43 @@
 @endsection
 
 @section('content')
-<div class="register-container">
-    <div class="register-box">
-        <div class="register-header">Registration</div>
-        <form method="POST" action="{{ route('register') }}">
+<div class="register">
+    <div class="register__box">
+        <div class="register__header">Registration</div>
+        <form method="POST" action="{{ route('register') }}" class="register__form">
             @csrf
-            <div class="form-group-wrapper">
-                <div class="form-group">
-                    <span class="icon">👤</span>
-                    <input type="text" name="name" placeholder="Username" value="{{ old('name') }}">
+            <div class="register__form-group-wrapper">
+                <div class="register__form-group">
+                    <span class="register__icon">👤</span>
+                    <input type="text" name="name" placeholder="Username" value="{{ old('name') }}" class="register__input">
                 </div>
                 @error('name')
-                <div class="error-message">{{ $message }}</div>
+                <div class="register__error-message">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="form-group-wrapper">
-                <div class="form-group">
-                    <span class="icon">📧</span>
-                    <input type="text" name="email" placeholder="Email" value="{{ old('email') }}">
+            <div class="register__form-group-wrapper">
+                <div class="register__form-group">
+                    <span class="register__icon">📧</span>
+                    <input type="text" name="email" placeholder="Email" value="{{ old('email') }}" class="register__input">
                 </div>
                 @error('email')
-                <div class="error-message">{{ $message }}</div>
+                <div class="register__error-message">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="form-group-wrapper">
-                <div class="form-group">
-                    <span class="icon">🔒</span>
-                    <input type="password" name="password" placeholder="Password">
+            <div class="register__form-group-wrapper">
+                <div class="register__form-group">
+                    <span class="register__icon">🔒</span>
+                    <input type="password" name="password" placeholder="Password" class="register__input">
                 </div>
                 @error('password')
-                <div class="error-message">{{ $message }}</div>
+                <div class="register__error-message">{{ $message }}</div>
                 @enderror
             </div>
 
-            <div class="form-actions">
-                <button type="submit">登録</button>
+            <div class="register__actions">
+                <button type="submit" class="register__button">登録</button>
             </div>
         </form>
     </div>
